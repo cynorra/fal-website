@@ -1,0 +1,112 @@
+Bu portal projesinin mimarisi, AdSense onayını ilk başvuruda garanti altına alacak **statik ansiklopedik içerikler (SEO omurgası)** ile oturum süresini ve sayfa gösterimini (Pageviews) uçuracak **interaktif araçları (Retention motoru)** bir araya getiren bir hibrit modeldir.
+
+---
+
+### Proje Kimliği & Konsept
+
+* **Çatı İsim Önerileri:** *AuraPulse, CosmicPath, LuminaDaily, CelestialDeck, MoonlitMind*
+* **Hedef Kitle:** Küresel (Başta ABD, İngiltere, Kanada, Avustralya olmak üzere İngilizce konuşan kadın ve Z kuşağı ağırlıklı kitle).
+* **Temel Felsefe:** Ezoterik, psikolojik ve astrolojik rehberliği modern, sade ve mobil öncelikli bir arayüzle sunmak.
+
+---
+
+### 1. Site Mimarisi ve URL Yapısı
+
+```text
+domain.com/
+├── /dreams/ (Rüya Sözlüğü)
+├── /symbols/ (Melek Sayıları & Spirit Hayvanlar)
+├── /horoscopes/ (Günlük Burçlar)
+├── /compatibility/ (Burç & İsim Uyumu)
+├── /tools/ (İnteraktif Hesaplayıcılar & Testler)
+└── /daily/ (Mood, Olumlama, Günün Tarot Kartı)
+
+```
+
+---
+
+### 2. Kapsamlı İçerik ve Konu Dağılımı
+
+#### Bölüm A: Kütüphane & SEO Katmanı (AdSense Onay Motoru)
+
+*Bu sayfalar 800–1200 kelimelik zengin metinlerden oluşur. Google botlarının "Düşük Değerli İçerik" demesini imkansız kılar.*
+
+1. **Rüya Sözlüğü (Dream Dictionary - 100+ Sayfa)**
+* *Temalar:* Hayvanlar (yılan, örümcek, köpek, kedi), Doğa olayları (sel, tsunami, yangın, deprem), Fiziksel durumlar (diş dökülmesi, uçmak, yüksekten düşmek, boğulmak, çıplak kalmak), İlişkiler (eski sevgili, vefat etmiş akraba, ihanet).
+* *Sayfa İçi Şablon:*
+* Kısa Özet & Hızlı Cevap
+* Psikolojik Yorum (Jung / Bilinçaltı perspektifi)
+* Spiritüel & Manevi Anlamı
+* Yaygın Varyasyonlar (Örn: Siyah yılan ısırması vs. yeşil yılan sevmek)
+* "Ne Yapmalısınız?" Eylem Tavsiyesi
+
+
+
+
+2. **Melek Sayıları & Numeroloji (Angel Numbers - 50+ Sayfa)**
+* *Temalar:* Tekrarlayan üçlüler/dörtlüler (111, 222, 333, 444, 555, 777, 888, 999, 1111, 1212 vb.), Yaşam Yolu Sayıları (Life Path 1-9, Master Numbers 11, 22, 33).
+* *Sayfa İçi Şablon:* Sayının genel titreşimi, Aşk ve ilişkilerdeki anlamı, Kariyer ve para mesajı, İkiz Alev (Twin Flame) bağı.
+
+
+3. **İşaretler & Doğa Sembolizmi (Omens & Spirit Animals - 40+ Sayfa)**
+* *Temalar:* Fiziksel hisler (sol/sağ kulak çınlaması, sol/sağ el kaşınması), Hayvan/böcek karşılaşmaları (peygamber devesi, karga, beyaz kelebek, uğur böceği, baykuş).
+
+
+
+#### Bölüm B: İnteraktif Araçlar & Testler (Trafik ve Gösterim Motoru)
+
+*Tamamı istemci tarafında (JavaScript) anlık çalışan, mobil uyumlu araçlar.*
+
+1. **Moon Phase Soulmate Matcher (Ay Evresi Eşleştirici):** İki kişinin doğum tarihi girilir. O günlerdeki ay evreleri görsel olarak yan yana getirilir (Hilal + Dolunay vb.) ve "Ruh ikizi uyum skoru" üretilir.
+2. **Rising & Moon Sign Calculator:** Doğum tarihi, saati ve doğum yeri girilerek yükselen burç ve ay burcu hesaplama motoru.
+3. **Zodiac Compatibility Matrix (144 Sayfa):** 12x12 tüm burç kombinasyonları (Örn: `/compatibility/aries-and-scorpio/`). Aşk, iletişim, güven ve cinsellik skorları.
+4. **Tek Kart Tarot & Günün Kartı (Daily Tarot Draw):** Kullanıcının ekrandan kapalı 3 karttan birini seçtiği, animasyonla kartın ters döndüğü ve anlık yorum üreten interaktif widget.
+5. **Mood & Daily Affirmation Hub:** "Bugün nasıl hissediyorsun?" (Kaygılı, Tükenmiş, Umutlu, Yorgun). Seçilen duygu durumuna göre ekranda beliren estetik bir kart ve günün olumlaması.
+6. **Aura Rengi Testi (7 Soruluk Quiz):** Kullanıcının soruları yanıtladığı, her soru geçişinde veya sonuçta geçiş reklamının tetiklendiği interaktif anket.
+
+---
+
+### 3. Sayfa Tipi ve Reklam Yerleşim Stratejisi
+
+| Sayfa Tipi | Sayfa Amacı | Başlıca Reklam Yerleşimi |
+| --- | --- | --- |
+| **Rüya & Sayı Rehberleri** | Arama motorundan gelen ilk tık (Organik Trafik) | İçerik içi reklamlar (In-article), Paragraf araları, Mobil Çapa Reklam (Sticky Anchor) |
+| **İnteraktif Araçlar** | Hesaplama ve bekleme süresi (Engagement) | Hesaplama formu altı banner, "Sonucu Gör" butonu tıklandığında Tam Ekran Geçiş Reklamı (Vignette) |
+| **Quizler & Çok Adımlı Testler** | Sayfa yenileme / Çoklu gösterim | Soru geçişlerinde reklam, Sonuç sayfasında kopyalanabilir görsel yanında kare reklam |
+| **Günlük Burç & Tarot** | Her gün geri gelen sadık kitle (Retention) | Kart açılma animasyonundan hemen önce/sonra display reklam |
+
+---
+
+### 4. Teknik Altyapı ve Veri Kurgusu
+
+* **Frontend:** Next.js (React) veya Astro (Astro, saf HTML/CSS çıktısı ve sıfır JS yüküyle Google Core Web Vitals skorlarında 100/100 almak için idealdir).
+* **Veritabanı / CMS:** Markdown (MDX) tabanlı yerel dosyalar veya Supabase/Strapi.
+* Rüya tabirleri ve melek sayıları tek bir JSON/Markdown şablonu üzerinden programatik olarak türetilebilir.
+
+
+* **Görsel Optimizasyonu:** WebP/AVIF formatında karanlık/mistik temalı (mor, lacivert, altın sarısı tonları) minimal vektör ve semboller.
+* **Hosting:** Vercel veya Cloudflare Pages (Küresel CDN sayesinde ABD'den giren kullanıcıya 100ms altında açılış hızı).
+
+---
+
+### 5. Lansman & AdSense Onay Yol Haritası
+
+1. **Aşama 1 (Kurulum & Onay):**
+* Siteyi karanlık, şık bir UI ile kurun.
+* `About Us`, `Contact`, `Privacy Policy`, `Terms of Service` sayfalarını ekleyin.
+* 25-30 adet derinlemesine rüya tabiri ve 15 adet melek sayısı içeriğiyle siteyi yayına alın.
+* Google Search Console'a site haritasını gönderin; sayfalar dizine eklendikten sonra AdSense başvurusunu yapın.
+
+
+2. **Aşama 2 (Araç Entegrasyonu):**
+* Onay alındıktan sonra ana sayfaya **Tek Kart Tarot**, **Mood Çarkı** ve **Moon Phase Matcher** araçlarını kodlayıp yerleştirin.
+* Sayfalar arası geçiş reklamlarını (Vignette Ads) panelden aktif edin.
+
+
+3. **Aşama 3 (Ölçekleme):**
+* Rüya sözlüğünü 100+ içeriğe genişletin.
+* Pinterest işletme hesabı açarak her rüya ve melek sayısı için estetik dikey pinler oluşturup siteye bağlayın (Pinterest, bu nişte günlük binlerce bedava ABD trafiği sağlar).
+
+
+
+Bu plan doğrultusunda, ilk adım olarak sitenin teknik altyapısını (örneğin Astro/Next.js şablonu) mu hazırlamak istersiniz, yoksa AdSense onayı için gereken ilk rüya/sembol içerik şablonunu mu kurgulayalım?
