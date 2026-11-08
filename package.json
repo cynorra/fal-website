@@ -20,7 +20,8 @@
     "auto-publish": "tsx scripts/pipeline/auto-publish.ts",
     "pretest:pipeline": "node scripts/sync-content.mjs",
     "pregenerate": "node scripts/sync-content.mjs",
-    "preauto-publish": "node scripts/sync-content.mjs"
+    "preauto-publish": "node scripts/sync-content.mjs",
+    "indexnow": "node scripts/indexnow.mjs"
   },
   "dependencies": {
     "canvas-confetti": "^1.9.3",

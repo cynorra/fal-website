@@ -52,3 +52,10 @@ jobs:
           apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
           accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
           command: pages deploy out --project-name=${{ env.PROJECT }} --branch=main --commit-dirty=true
+
+      # Runs after the new version is live, on every deploy: the daily 00:10 UTC rebuild, a push, and the
+      # deploy the auto-blog job dispatches right after it publishes an article (so a new article is submitted
+      # the moment it is reachable). Google ignores IndexNow; it reads the sitemap.
+      - name: Tell IndexNow what changed (daily pages, new or updated articles)
+        run: node scripts/indexnow.mjs
+        continue-on-error: true
