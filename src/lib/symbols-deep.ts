@@ -8,13 +8,32 @@ export interface DeepDive {
   faq: { question: string; answer: string }[];
 }
 
-export const skeptic =(code: string): DeepSection => ({
-  heading: `Why do I keep seeing ${code}? The psychological explanation`,
-  body: [
-    `Psychologists call it the frequency illusion (also the Baader-Meinhof phenomenon): once you notice a pattern, your brain flags it every time it appears, and you forget the many times it did not. Clocks, receipts, license plates and phone numbers are full of digits, so any number you are primed to notice will seem to follow you.`,
-    `That does not make ${code} meaningless. Many people use a repeating number as a deliberate pause button: a cue to check in with how they feel, what they are avoiding and what they actually want. Treat it as a reflection prompt rather than a prediction, and you get the benefit either way.`,
-  ],
-});
+const digitSum = (code: string) => {
+  let n = code.split("").reduce((t, c) => t + Number(c), 0);
+  const steps = [code.split("").join("+") + "=" + n];
+  while (n > 9) {
+    const next = String(n).split("").reduce((t, c) => t + Number(c), 0);
+    steps.push(String(n).split("").join("+") + "=" + next);
+    n = next;
+  }
+  return { root: n, steps: steps.join(", ") };
+};
+
+export const skeptic = (code: string): DeepSection => {
+  const { root, steps } = digitSum(code);
+  const v = code.split("").reduce((t, c) => t + Number(c), 0) % 3;
+  const opening = [
+    `Psychologists call it the frequency illusion (or Baader-Meinhof phenomenon): once a pattern is on your mind, you register every instance and forget the thousands of times it did not appear. Receipts, clocks, license plates and phone numbers are full of digits, so a number you are primed to notice will seem to follow you.`,
+    `One honest explanation for seeing ${code} often is selective attention. The brain filters most of what you see, but a number you have read about gets flagged as relevant. That makes the sightings feel rare when they are statistically ordinary.`,
+    `Skeptics point to confirmation bias: when ${code} shows up you remember it, and when you see 4:17 or 8:26 you do not. Over a year you pass thousands of clocks, so a repeating pattern is bound to appear sometimes.`,
+  ][v];
+  const closing = [
+    `That does not make it meaningless. Many people use ${code} as a pause button: a moment to ask what they feel, what they are avoiding and what they want. The reduction here is ${steps}, which numerologists read as a ${root}, but you can treat the number as a prompt for reflection either way.`,
+    `Treating it as a reflection cue is useful whatever you believe. In numerology ${code} reduces by ${steps}, landing on ${root}; use that as a theme for a short journal entry, and judge the benefit by what you do afterwards.`,
+    `If you like the symbolism, keep it light. The digits of ${code} add up as ${steps} (a ${root} in numerology). Let the number be a reminder to check in with yourself, not a prediction about your life.`,
+  ][(v + 1) % 3];
+  return { heading: `Why do I keep seeing ${code}? The psychological explanation`, body: [opening, closing] };
+};
 
 export const DEEP_DIVES: Record<string, DeepDive> = {
   "angel-number-333": {

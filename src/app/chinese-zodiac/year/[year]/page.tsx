@@ -48,6 +48,25 @@ export default function YearPage({ params }: Props) {
   const endStr = `${MONTHS[end.getUTCMonth()]} ${end.getUTCDate()}, ${end.getUTCFullYear()}`;
   const slugOf = (n: string) => ANIMAL_BY_NAME[n].slug;
 
+  // Year-specific facts, all computed
+  const startDate = new Date(Date.UTC(y, start.month - 1, start.day));
+  const weekday = new Intl.DateTimeFormat("en-US", { timeZone: "UTC", weekday: "long" }).format(startDate);
+  const yearDays = Math.round((Date.UTC(y + 1, nextStart.month - 1, nextStart.day) - startDate.getTime()) / 86400000);
+  const earlyDays = Math.round((startDate.getTime() - Date.UTC(y, 0, 1)) / 86400000);
+  const ageNow = new Date().getUTCFullYear() - y;
+  const neighbors = [-4, -3, -2, -1, 0, 1, 2, 3, 4]
+    .map((d) => y + d)
+    .filter((yy) => yy >= FIRST && yy <= LAST)
+    .map((yy) => ({ yy, z: chineseZodiac(yy, 7, 1) }));
+  const sameAnimal = [-24, -12, 12, 24].map((d) => y + d).filter((yy) => yy >= FIRST && yy <= LAST);
+  const sameCycle = [y - 60, y + 60];
+  const trineYears = TRINES[z.animal].map((name) => {
+    const nearest = [-6, -5, -4, -3, -2, -1, 0, 1, 2, 3, 4, 5, 6]
+      .map((d) => y + d)
+      .filter((yy) => yy >= FIRST && yy <= LAST && chineseZodiac(yy, 7, 1).animal === name);
+    return { name, years: nearest };
+  });
+
   return (
     <article className="max-w-3xl mx-auto py-8 space-y-10 text-sm sm:text-base text-white/80 font-light leading-relaxed">
       <Link href="/chinese-zodiac" className="inline-flex items-center space-x-1.5 text-xs text-purple-300 hover:text-white">
@@ -111,6 +130,60 @@ export default function YearPage({ params }: Props) {
       </section>
 
       <section className="space-y-3">
+        <h2 className="text-2xl font-serif font-bold text-white">{y} zodiac year facts</h2>
+        <ul className="list-disc pl-5 space-y-1">
+          <li>
+            Chinese New Year {y} fell on a <strong className="text-white">{weekday}</strong>, {fmt(start, y)}.
+          </li>
+          <li>
+            The {z.animal} year lasted <strong className="text-white">{yearDays} days</strong>
+            {yearDays > 365 ? ", longer than a calendar year because the lunisolar calendar added a leap month" : yearDays < 365 ? ", slightly shorter than a calendar year" : ""}.
+          </li>
+          <li>
+            Anyone born in the first <strong className="text-white">{earlyDays} days</strong> of {y} (January 1 to {fmt(start, y)}) belongs to the previous sign.
+          </li>
+          <li>
+            {ageNow >= 0
+              ? `People born in ${y} turn ${ageNow} or ${ageNow - 1} during ${new Date().getUTCFullYear()}, depending on their birthday.`
+              : `${y} is in the future.`}
+          </li>
+          {sameCycle.map((yy) => (yy >= FIRST && yy <= LAST ? (
+            <li key={yy}>
+              The same {z.element} {z.animal} combination appears every 60 years: {yy < y ? "previously" : "next"} in{" "}
+              <Link href={`/chinese-zodiac/year/${yy}`} className="text-amber-300 underline">{yy}</Link>.
+            </li>
+          ) : null))}
+        </ul>
+        <p>
+          Other {z.animal} years:{" "}
+          {sameAnimal.map((yy, i) => (
+            <React.Fragment key={yy}>
+              {i > 0 && ", "}
+              <Link href={`/chinese-zodiac/year/${yy}`} className="text-amber-300 underline">{yy}</Link>
+            </React.Fragment>
+          ))}
+          . Each has a different element, which colors the animal&apos;s traits.
+        </p>
+        <div className="glass-panel rounded-2xl border border-white/10 overflow-x-auto">
+          <table className="w-full text-xs sm:text-sm">
+            <thead className="text-left text-white/60 border-b border-white/10">
+              <tr><th className="p-3">Year</th><th className="p-3">Sign</th></tr>
+            </thead>
+            <tbody className="divide-y divide-white/5">
+              {neighbors.map(({ yy, z: zz }) => (
+                <tr key={yy} className={yy === y ? "text-amber-300" : ""}>
+                  <td className="p-3">
+                    <Link href={`/chinese-zodiac/year/${yy}`} className="hover:text-white">{yy}</Link>
+                  </td>
+                  <td className="p-3">{zz.polarity} {zz.element} {zz.animal}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <section className="space-y-3">
         <h2 className="text-2xl font-serif font-bold text-white">{z.animal} compatibility</h2>
         <p>
           The {z.animal} is traditionally most harmonious with{" "}
@@ -126,6 +199,22 @@ export default function YearPage({ params }: Props) {
           <Link href={`/chinese-zodiac/${slugOf(CLASHES[z.animal])}`} className="text-amber-300 underline">
             {CLASHES[z.animal]}
           </Link>
+          .
+        </p>
+        <p>
+          Near {y}, the {z.animal}&apos;s harmonious partners were born in:{" "}
+          {trineYears.map((t, i) => (
+            <React.Fragment key={t.name}>
+              {i > 0 && "; "}
+              {t.name}:{" "}
+              {t.years.map((yy, j) => (
+                <React.Fragment key={yy}>
+                  {j > 0 && ", "}
+                  <Link href={`/chinese-zodiac/year/${yy}`} className="text-amber-300 underline">{yy}</Link>
+                </React.Fragment>
+              ))}
+            </React.Fragment>
+          ))}
           .
         </p>
       </section>

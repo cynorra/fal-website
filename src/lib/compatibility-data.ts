@@ -206,6 +206,8 @@ const CURATED_REPORTS: Record<string, Partial<CompatibilityReport>> = {
   },
 };
 
+export const CURATED_PAIRS: string[] = Object.keys(CURATED_REPORTS);
+
 export function calculateCompatibility(signA: string, signB: string): CompatibilityReport {
   const normA = signA.toLowerCase().trim();
   const normB = signB.toLowerCase().trim();

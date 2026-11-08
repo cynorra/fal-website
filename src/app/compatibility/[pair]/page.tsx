@@ -1,8 +1,8 @@
 import React from "react";
-import { notFound } from "next/navigation";
+import { notFound, permanentRedirect } from "next/navigation";
 import { Metadata } from "next";
 import Link from "next/link";
-import { calculateCompatibility } from "@/lib/compatibility-data";
+import { calculateCompatibility, CURATED_PAIRS } from "@/lib/compatibility-data";
 import { ZODIAC_SIGNS } from "@/lib/horoscopes-data";
 import {
   Heart,
@@ -20,6 +20,11 @@ import {
 import { AdBanner } from "@/components/ui/AdBanner";
 import { ZODIAC_PROFILE_BY_ID } from "@/lib/zodiac-profiles";
 import { aspectBetween, modalityText } from "@/lib/aspects";
+import { PAIRS_1 } from "@/lib/compat-pairs-1";
+import { PAIRS_2 } from "@/lib/compat-pairs-2";
+import { PAIRS_3 } from "@/lib/compat-pairs-3";
+
+const PAIR_TEXT = { ...PAIRS_1, ...PAIRS_2, ...PAIRS_3 };
 
 interface Props {
   params: { pair: string };
@@ -34,7 +39,7 @@ function parsePair(pair: string): [string, string] | null {
 }
 
 export function generateStaticParams() {
-  return SIGN_IDS.flatMap((a) => SIGN_IDS.map((b) => ({ pair: `${a}-and-${b}` })));
+  return SIGN_IDS.flatMap((a, i) => SIGN_IDS.slice(i).map((b) => ({ pair: `${a}-and-${b}` })));
 }
 
 export function generateMetadata({ params }: Props): Metadata {
@@ -49,6 +54,8 @@ export function generateMetadata({ params }: Props): Metadata {
     title: `${nameA} and ${nameB} Compatibility: Love, Chemistry & Match | AuraPulse`,
     description: `Complete relationship analysis for ${nameA} and ${nameB}. Explore elemental alchemy, bedroom chemistry, communication traps, and long-term marriage potential.`,
     alternates: { canonical: `/compatibility/${canonicalSlug}` },
+    // Pair pages without a full hand-written report are kept for users but not indexed yet
+    robots: CURATED_PAIRS.includes(canonicalSlug) ? undefined : { index: false, follow: true },
   };
 }
 
@@ -57,12 +64,18 @@ export default function PairCompatibilityPage({ params }: Props) {
   if (!parts) notFound();
 
   const [signA, signB] = parts;
+  if (SIGN_IDS.indexOf(signA) > SIGN_IDS.indexOf(signB)) permanentRedirect(`/compatibility/${signB}-and-${signA}`);
+  const canonicalKey = `${signA}-and-${signB}`;
+  const curated = CURATED_PAIRS.includes(canonicalKey);
+  const pairText = PAIR_TEXT[canonicalKey];
   const report = calculateCompatibility(signA, signB);
   const ia = SIGN_IDS.indexOf(signA);
   const ib = SIGN_IDS.indexOf(signB);
   const aspect = aspectBetween(ia, ib);
   const pa = ZODIAC_PROFILE_BY_ID[signA];
   const pb = ZODIAC_PROFILE_BY_ID[signB];
+  const sa = ZODIAC_SIGNS[ia];
+  const sb = ZODIAC_SIGNS[ib];
   const nA = report.signA;
   const nB = report.signB;
 
@@ -104,9 +117,7 @@ export default function PairCompatibilityPage({ params }: Props) {
         <div className="text-5xl sm:text-6xl font-serif font-black gold-gradient-text my-2">
           {report.overallScore}%
         </div>
-        <p className="text-xs text-white/60 max-w-md mx-auto">
-          Based on the elements of the two signs and the astrological aspect between them.
-        </p>
+
 
         {/* 3 Metric Bars */}
         <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mt-8">
@@ -127,7 +138,7 @@ export default function PairCompatibilityPage({ params }: Props) {
         </div>
       </section>
 
-      {/* 1. Elemental Chemistry & Polarity */}
+      {curated && (
       <section className="glass-panel rounded-3xl p-6 sm:p-8 border border-white/10 space-y-3">
         <div className="flex items-center space-x-2 text-purple-300 text-xs font-semibold uppercase tracking-wider">
           <Layers className="w-4 h-4" />
@@ -140,6 +151,8 @@ export default function PairCompatibilityPage({ params }: Props) {
           {report.elementalDynamic}
         </p>
       </section>
+
+      )}
 
       {/* Aspect and modality (pair-specific astrology) */}
       <section className="glass-panel rounded-3xl p-6 sm:p-8 border border-white/10 space-y-3">
@@ -160,28 +173,14 @@ export default function PairCompatibilityPage({ params }: Props) {
         <h2 className="text-xl sm:text-2xl font-serif font-bold text-white">
           How {nA} and {nB} approach love
         </h2>
-        <div>
-          <h3 className="font-serif font-bold text-white">{nA} in love</h3>
-          <p className="text-sm sm:text-base text-white/85 leading-relaxed font-light">{pa.loveStyle}</p>
-        </div>
-        <div>
-          <h3 className="font-serif font-bold text-white">{nB} in love</h3>
-          <p className="text-sm sm:text-base text-white/85 leading-relaxed font-light">{pb.loveStyle}</p>
-        </div>
-        <div className="grid sm:grid-cols-2 gap-6 text-sm text-white/80 font-light">
-          <div>
-            <h3 className="font-serif font-bold text-white mb-1">{nA} brings</h3>
-            <p>{pa.strengths.join(", ")}.</p>
-            <h3 className="font-serif font-bold text-white mt-3 mb-1">{nA} should watch</h3>
-            <p>{pa.weaknesses.join(", ")}.</p>
-          </div>
-          <div>
-            <h3 className="font-serif font-bold text-white mb-1">{nB} brings</h3>
-            <p>{pb.strengths.join(", ")}.</p>
-            <h3 className="font-serif font-bold text-white mt-3 mb-1">{nB} should watch</h3>
-            <p>{pb.weaknesses.join(", ")}.</p>
-          </div>
-        </div>
+        <p className="text-sm sm:text-base text-white/85 leading-relaxed font-light">
+          {nA} is a {sa.modality.toLowerCase()} {sa.element.toLowerCase()} sign ruled by {pa.rulerPlanet}; {nB} is a{" "}
+          {sb.modality.toLowerCase()} {sb.element.toLowerCase()} sign ruled by {pb.rulerPlanet}.{" "}
+          {sa.element === sb.element
+            ? `Sharing the ${sa.element.toLowerCase()} element gives them a similar emotional language.`
+            : `Their elements differ (${sa.element.toLowerCase()} and ${sb.element.toLowerCase()}), so each handles stress and affection in a different way.`}{" "}
+          {nA}&apos;s keywords are {pa.keywords.slice(0, 3).join(", ")}; {nB}&apos;s are {pb.keywords.slice(0, 3).join(", ")}.
+        </p>
         <p className="text-sm text-white/70">
           Read the full profiles:{" "}
           <Link href={`/horoscopes/${signA}`} className="text-amber-300 underline">
@@ -195,6 +194,32 @@ export default function PairCompatibilityPage({ params }: Props) {
         </p>
       </section>
 
+      {!curated && pairText && (
+        <>
+          <section className="glass-panel rounded-3xl p-6 sm:p-8 border border-emerald-500/20 space-y-3">
+            <h2 className="text-xl sm:text-2xl font-serif font-bold text-white">
+              What works between {nA} and {nB}
+            </h2>
+            <p className="text-sm sm:text-base text-white/85 leading-relaxed font-light">{pairText.works}</p>
+          </section>
+          <AdBanner format="in-article" label="COUPLES TAROT SPREAD & SYNASTRY APP" />
+          <section className="glass-panel rounded-3xl p-6 sm:p-8 border border-amber-500/20 space-y-3">
+            <h2 className="text-xl sm:text-2xl font-serif font-bold text-white">
+              Where {nA} and {nB} struggle
+            </h2>
+            <p className="text-sm sm:text-base text-white/85 leading-relaxed font-light">{pairText.strain}</p>
+          </section>
+          <section className="glass-panel rounded-3xl p-6 sm:p-8 border border-purple-500/30 space-y-3">
+            <h2 className="text-xl sm:text-2xl font-serif font-bold text-white">
+              Practical advice for {nA} and {nB}
+            </h2>
+            <p className="text-sm sm:text-base text-white/85 leading-relaxed font-light">{pairText.tip}</p>
+          </section>
+        </>
+      )}
+
+      {curated && (
+        <>
       {/* 2. Intimacy & Bedroom Chemistry */}
       <section className="glass-panel rounded-3xl p-6 sm:p-8 border border-rose-500/20 bg-gradient-to-b from-rose-950/10 to-transparent space-y-3">
         <div className="flex items-center space-x-2 text-rose-300 text-xs font-semibold uppercase tracking-wider">
@@ -283,6 +308,9 @@ export default function PairCompatibilityPage({ params }: Props) {
           {report.cosmicAdvice}
         </p>
       </section>
+
+        </>
+      )}
 
       <AdBanner format="square" label="COUPLES ANNIVERSARY GIFTS & CRYSTALS" />
     </article>

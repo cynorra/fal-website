@@ -1,11 +1,19 @@
 import type { DeepDive } from "./symbols-deep";
 
+const WAKE: Record<string, string[]> = {
+  tornado: ["Storm dreams that return every night often track a real source of pressure: a deadline, a family argument or financial worry. If yours repeat, note what you were doing in the hours before bed and whether the dream eases when the stress does.", "Seek help if the nightmares start before a bad day, cause dread of sleeping, or follow a real storm or disaster you lived through."],
+  flying: ["Flying dreams that become frequent can simply mean you are sleeping lightly and dreaming vividly, or that you are practicing lucid dreaming. They are not a concern on their own.", "Mention it to a doctor only if dreams come with sleep paralysis that frightens you, daytime sleepiness or dizziness."],
+  spider: ["Repeated spider dreams commonly follow weeks of low-level stress or a real encounter. Look for something small but persistent in your life, like an email thread or a nagging chore, that matches the crawling feeling.", "A specific phobia that disturbs sleep or daily life responds well to short courses of therapy."],
+  "dog bite": ["If you dream of being bitten again and again, check whether a particular person or situation makes you feel quietly attacked. Dreams often return to a theme until it is dealt with.", "If the dreams follow a real dog attack, talk to a professional, as post-incident nightmares are treatable."],
+  "house fire": ["Fire dreams that repeat can mean anger or anxiety is being pushed down. Notice which room recurs and what it stands for in your life right now.", "If you wake up in a panic often, or the dreams follow a real fire, a therapist can help; a working smoke alarm is also a good practical step."],
+  drowning: ["Drowning dreams that return weekly are worth tracking along with your breathing: snoring, waking with a dry mouth or gasping can point to sleep apnea.", "Seek medical advice for breathing symptoms and emotional support if the dream matches a feeling of sinking in daily life."],
+  "black cat": ["A cat that keeps appearing may be pointing to something you sense but have not named, such as a relationship that feels slightly off. Jot down where the cat was and how it behaved.", "If the dream causes fear of sleeping or follows a real scare, a counselor can help."],
+  grief: ["Grief dreams often return around birthdays, anniversaries and holidays. They are not a sign that you are stuck; they usually soften with time.", "Seek support if grief makes it hard to function for months, if you feel hopeless, or if you have thoughts of harming yourself. Local crisis lines are available in most countries."],
+};
+
 const wake = (topic: string): { heading: string; body: string[] } => ({
-  heading: `When to take a recurring ${topic} dream seriously`,
-  body: [
-    "A single dream is rarely meaningful on its own. A dream that repeats for weeks, leaves you anxious during the day, or comes with trouble sleeping is worth paying attention to. Keeping a short journal of what happened the day before can reveal the trigger.",
-    "If recurring dreams are linked to trauma, panic or low mood, talk with a doctor or therapist. Dream interpretation is a tool for reflection and entertainment, not a substitute for medical or mental health care.",
-  ],
+  heading: `When a recurring ${topic} dream deserves attention`,
+  body: WAKE[topic] ?? [],
 });
 
 export const DREAM_DEEP_DIVES: Record<string, DeepDive> = {

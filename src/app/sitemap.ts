@@ -6,6 +6,7 @@ import { SITE_URL } from "@/lib/site";
 import { LIFE_PATH_ENTRIES } from "@/lib/life-path-data";
 import { ANIMAL_PROFILES } from "@/lib/chinese-zodiac-data";
 import { MONTHS, ELEMENTS } from "@/lib/zodiac-calendar";
+import { CURATED_PAIRS } from "@/lib/compatibility-data";
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const baseUrl = SITE_URL;
@@ -87,7 +88,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
 
   // Unique zodiac pairings (78); reversed slugs canonicalize to these
   const compatibilityRoutes = ZODIAC_SIGNS.flatMap((a, i) =>
-    ZODIAC_SIGNS.slice(i).map((b) => ({
+    ZODIAC_SIGNS.slice(i).filter((b) => CURATED_PAIRS.includes(`${a.id}-and-${b.id}`)).map((b) => ({
       url: `${baseUrl}/compatibility/${a.id}-and-${b.id}`,
       lastModified: new Date(),
       changeFrequency: "monthly" as const,
