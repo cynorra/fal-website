@@ -20,6 +20,7 @@ import {
 import { AdBanner } from "@/components/ui/AdBanner";
 import { SITE_URL } from "@/lib/site";
 import { DREAM_SEO_TITLES } from "@/lib/seo-titles";
+import { DREAM_DEEP_DIVES } from "@/lib/dreams-deep";
 
 interface Props {
   params: { slug: string };
@@ -48,6 +49,8 @@ export default function DreamDetailPage({ params }: Props) {
   const entry = DREAM_ENTRIES.find((d) => d.slug === params.slug);
   if (!entry) notFound();
 
+  const deep = DREAM_DEEP_DIVES[entry.slug];
+  const allFaq = [...(entry.faq || []), ...(deep?.faq || [])];
   const otherDreams = DREAM_ENTRIES.filter((d) => d.slug !== entry.slug).slice(0, 3);
 
   // Rich Schema.org Article & FAQPage JSON-LD
@@ -77,7 +80,7 @@ export default function DreamDetailPage({ params }: Props) {
       },
       {
         "@type": "FAQPage",
-        mainEntity: entry.faq.map((item) => ({
+        mainEntity: allFaq.map((item) => ({
           "@type": "Question",
           name: item.question,
           acceptedAnswer: {
@@ -270,14 +273,26 @@ export default function DreamDetailPage({ params }: Props) {
         </p>
       </section>
 
+      {deep &&
+        deep.sections.map((sec) => (
+          <section key={sec.heading} className="glass-panel rounded-3xl p-6 sm:p-8 border border-white/10 space-y-4">
+            <h2 className="text-xl sm:text-2xl font-serif font-bold text-white">{sec.heading}</h2>
+            {sec.body.map((para, i) => (
+              <p key={i} className="text-sm sm:text-base text-white/85 leading-relaxed font-light">
+                {para}
+              </p>
+            ))}
+          </section>
+        ))}
+
       {/* 9. Comprehensive FAQ Section */}
-      {entry.faq && entry.faq.length > 0 && (
+      {allFaq.length > 0 && (
         <section className="space-y-4">
           <h2 className="text-xl sm:text-2xl font-serif font-bold text-white">
             Frequently Asked Questions
           </h2>
           <div className="space-y-3">
-            {entry.faq.map((q, i) => (
+            {allFaq.map((q, i) => (
               <div key={i} className="glass-panel rounded-2xl p-5 border border-white/10 space-y-2">
                 <h4 className="font-serif font-semibold text-sm sm:text-base text-amber-300">
                   {q.question}
