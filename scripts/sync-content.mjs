@@ -34,18 +34,27 @@ function plain(v) {
   return null;
 }
 
+const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
+
 async function fetchCollection(key) {
   const url = `https://firestore.googleapis.com/v1/projects/${PROJECT}/databases/(default)/documents:runQuery`;
-  const res = await fetch(url, {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({
-      structuredQuery: {
-        from: [{ collectionId: key }],
-        where: { fieldFilter: { field: { fieldPath: "status" }, op: "EQUAL", value: { stringValue: "published" } } },
-      },
-    }),
+  const body = JSON.stringify({
+    structuredQuery: {
+      from: [{ collectionId: key }],
+      where: { fieldFilter: { field: { fieldPath: "status" }, op: "EQUAL", value: { stringValue: "published" } } },
+    },
   });
+  // Retry transient failures (5xx, 429, and the brief 403s right after rules are published).
+  let res;
+  for (let attempt = 1; attempt <= 6; attempt++) {
+    try {
+      res = await fetch(url, { method: "POST", headers: { "Content-Type": "application/json" }, body });
+      if (res.ok || ![403, 429, 500, 502, 503, 504].includes(res.status)) break;
+    } catch (e) {
+      if (attempt === 6) throw e;
+    }
+    await sleep(2000 * attempt);
+  }
   if (!res.ok) throw new Error(`Firestore ${key}: ${res.status} ${res.statusText} ${await res.text()}`);
   const rows = (await res.json()).filter((x) => x.document);
   return rows.map((x) => {

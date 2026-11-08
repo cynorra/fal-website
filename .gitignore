@@ -43,3 +43,6 @@ next-env.d.ts
 # written by scripts/sync-content.mjs before every dev/build
 /src/generated/
 .env
+
+# Firebase service account keys (never commit)
+*firebase-adminsdk*.json
