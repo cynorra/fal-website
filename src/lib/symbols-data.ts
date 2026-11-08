@@ -23,7 +23,7 @@ export interface SymbolEntry {
   faq: SymbolFAQ[];
 }
 
-export const SYMBOL_ENTRIES: SymbolEntry[] = [
+const BASE_SYMBOLS: SymbolEntry[] = [
   {
     slug: "angel-number-555",
     code: "555",
@@ -352,3 +352,7 @@ export const SYMBOL_ENTRIES: SymbolEntry[] = [
     ],
   },
 ];
+
+import { EXTRA_SYMBOLS } from "./symbols-extra";
+
+export const SYMBOL_ENTRIES: SymbolEntry[] = [...BASE_SYMBOLS, ...EXTRA_SYMBOLS];

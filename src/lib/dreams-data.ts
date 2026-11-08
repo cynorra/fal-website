@@ -27,7 +27,7 @@ export interface DreamEntry {
   faq: DreamFAQ[];
 }
 
-export const DREAM_ENTRIES: DreamEntry[] = [
+const BASE_DREAMS: DreamEntry[] = [
   {
     slug: "pregnancy-dream-meaning",
     title: "Pregnancy Dream Meaning: Gestating New Beginnings, Creativity & Life Birth",
@@ -665,3 +665,7 @@ export const DREAM_ENTRIES: DreamEntry[] = [
     ],
   },
 ];
+
+import { EXTRA_DREAMS } from "./dreams-extra";
+
+export const DREAM_ENTRIES: DreamEntry[] = [...BASE_DREAMS, ...EXTRA_DREAMS];

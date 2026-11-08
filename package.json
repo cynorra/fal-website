@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "dev": "node -r ./patch-exfat.cjs node_modules/next/dist/bin/next dev",
-    "build": "node -r ./patch-exfat.cjs node_modules/next/dist/bin/next build",
+    "build": "node --max-old-space-size=4096 -r ./patch-exfat.cjs node_modules/next/dist/bin/next build",
     "start": "node -r ./patch-exfat.cjs node_modules/next/dist/bin/next start",
     "lint": "next lint"
   },
