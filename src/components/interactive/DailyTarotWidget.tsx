@@ -83,7 +83,7 @@ export function DailyTarotWidget() {
                 disabled={selectedIdx !== null}
                 className={`group relative h-72 sm:h-80 w-full rounded-2xl p-1 transition-all duration-500 text-left cursor-pointer transform-style-3d ${
                   isChosen
-                    ? "scale-105 rotate-y-180 ring-2 ring-amber-400"
+                    ? "scale-105 ring-2 ring-amber-400"
                     : selectedIdx !== null
                     ? "opacity-40 scale-95"
                     : "hover:-translate-y-3 hover:shadow-2xl hover:shadow-purple-600/30"
