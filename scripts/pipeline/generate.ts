@@ -192,28 +192,8 @@ Return JSON {"bodyHtml": "..."} with the full expanded body.`,
 }
 
 // ---- main ------------------------------------------------------------------------------------
-async function main() {
-  const clients = initGemini();
-  let rows: ArticleRow[] = [];
-  try {
-    rows = await fetchAllArticles();
-  } catch (e) {
-    if (!DRY) throw e;
-    console.warn(`Firestore not reachable (${(e as Error).message}); dry run continues with an empty corpus.`);
-  }
-  const titles = rows.map((r) => r.title);
-  const corpus = {
-    headings: collectHeadingSet(rows.map((r) => r.body_html ?? '')),
-    openings: new Set(rows.map((r) => openingKey(r.body_html ?? '')).filter(Boolean)),
-    slugs: new Set(rows.filter((r) => r.status === 'published').map((r) => r.slug)),
-  };
-
-  const forced = topicArg > -1 ? TOPICS[Number(process.argv[topicArg + 1])] : undefined;
-  const topic = forced ?? TOPICS.find((t) => findTopicIssues(t).length === 0 && !isDuplicateTopic(t.title, titles) && !rows.some((r) => r.slug === slugify(t.title)));
-  if (!topic) {
-    console.log('No eligible topic left in topics.ts — add topics from the Keyword Planner export.');
-    return;
-  }
+/** Tries one topic (up to 4 attempts). Returns true when a draft passed every gate and was written (or dry-run saved). */
+async function attemptTopic(topic: Topic, clients: ReturnType<typeof initGemini>, rows: ArticleRow[], corpus: { headings: Set<string>; openings: Set<string>; slugs: Set<string> }): Promise<boolean> {
   console.log(`Topic: ${topic.title}  [${topic.keyword}, ${topic.volume}/mo, ${topic.cluster}]`);
 
   const ex = topic.chartExample ? chartExampleFor(slugify(topic.title)) : undefined;
@@ -243,7 +223,7 @@ async function main() {
       if (!existsSync(out)) mkdirSync(out);
       writeFileSync(join(out, `${slug}.html`), `<h1>${a.title}</h1>\n<p><em>${a.description}</em></p>\n${a.html}\n${d.faqs.map((f) => `<h3>${f.question}</h3><p>${f.answer}</p>`).join('\n')}`);
       console.log(`PASS (dry run): .dry-run/${slug}.html — nothing written to the site or Firestore.`);
-      return;
+      return true;
     }
     await upsertArticle({
       slug, title: a.title, description: a.description, body_html: a.html, faqs: d.faqs.map((f) => ({ question: f.question.trim(), answer: f.answer.trim() })),
@@ -251,9 +231,40 @@ async function main() {
       meta: { form: form.id, keyword: topic.keyword, publishOn: PUBLISH_DATE, volume: topic.volume },
     });
     console.log(`DRAFT written to Firestore (status draft): ${slug}. auto-publish.ts decides if it goes live.`);
+    return true;
+  }
+  console.warn(`Topic failed the quality gates after 4 attempts: ${topic.title}`);
+  return false;
+}
+
+async function main() {
+  const clients = initGemini();
+  let rows: ArticleRow[] = [];
+  try {
+    rows = await fetchAllArticles();
+  } catch (e) {
+    if (!DRY) throw e;
+    console.warn(`Firestore not reachable (${(e as Error).message}); dry run continues with an empty corpus.`);
+  }
+  const titles = rows.map((r) => r.title);
+  const corpus = {
+    headings: collectHeadingSet(rows.map((r) => r.body_html ?? '')),
+    openings: new Set(rows.map((r) => openingKey(r.body_html ?? '')).filter(Boolean)),
+    slugs: new Set(rows.filter((r) => r.status === 'published').map((r) => r.slug)),
+  };
+
+  const forced = topicArg > -1 ? TOPICS[Number(process.argv[topicArg + 1])] : undefined;
+  const eligible = forced ? [forced] : TOPICS.filter((t) => findTopicIssues(t).length === 0 && !isDuplicateTopic(t.title, titles) && !rows.some((r) => r.slug === slugify(t.title)));
+  if (!eligible.length) {
+    console.log('No eligible topic left in topics.ts — add topics from the Keyword Planner export.');
     return;
   }
-  console.error('FAILED: no draft passed the quality gates after 4 attempts.');
+  // A topic that cannot pass is skipped for this run (the next eligible one is tried) so one hard topic never blocks the daily article.
+  const MAX_TOPICS_PER_RUN = DRY || forced ? 1 : 3;
+  for (const topic of eligible.slice(0, MAX_TOPICS_PER_RUN)) {
+    if (await attemptTopic(topic, clients, rows, corpus)) return;
+  }
+  console.error(`FAILED: none of ${Math.min(eligible.length, MAX_TOPICS_PER_RUN)} topic(s) passed the quality gates.`);
   process.exit(1);
 }
 
