@@ -8,7 +8,7 @@ export interface DeepDive {
   faq: { question: string; answer: string }[];
 }
 
-const skeptic = (code: string): DeepSection => ({
+export const skeptic =(code: string): DeepSection => ({
   heading: `Why do I keep seeing ${code}? The psychological explanation`,
   body: [
     `Psychologists call it the frequency illusion (also the Baader-Meinhof phenomenon): once you notice a pattern, your brain flags it every time it appears, and you forget the many times it did not. Clocks, receipts, license plates and phone numbers are full of digits, so any number you are primed to notice will seem to follow you.`,

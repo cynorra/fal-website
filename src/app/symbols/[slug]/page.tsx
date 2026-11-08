@@ -20,6 +20,7 @@ import { AdBanner } from "@/components/ui/AdBanner";
 import { SITE_URL } from "@/lib/site";
 import { SYMBOL_SEO_TITLES } from "@/lib/seo-titles";
 import { DEEP_DIVES } from "@/lib/symbols-deep";
+import { DEEP_DIVES_2 } from "@/lib/symbols-deep-2";
 
 interface Props {
   params: { slug: string };
@@ -48,7 +49,7 @@ export default function SymbolDetailPage({ params }: Props) {
   const entry = SYMBOL_ENTRIES.find((s) => s.slug === params.slug);
   if (!entry) notFound();
 
-  const deep = DEEP_DIVES[entry.slug];
+  const deep = (DEEP_DIVES[entry.slug] ?? DEEP_DIVES_2[entry.slug]);
   const allFaq = [...(entry.faq || []), ...(deep?.faq || [])];
   const others = SYMBOL_ENTRIES.filter((s) => s.slug !== entry.slug).slice(0, 3);
 
