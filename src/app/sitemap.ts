@@ -16,6 +16,8 @@ export default function sitemap(): MetadataRoute.Sitemap {
     "/dreams",
     "/symbols",
     "/horoscopes",
+    "/horoscopes/weekly",
+    "/horoscopes/monthly",
     "/compatibility",
     "/tools",
     "/tools/moon-phase",

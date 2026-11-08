@@ -31,6 +31,14 @@ export default function HoroscopesHubPage() {
         <p className="text-sm sm:text-base text-white/70 max-w-xl mx-auto font-light leading-relaxed">
           Navigate your day with cosmic wisdom. Select your sun sign below to receive targeted insights for romance, vocational success, and mental vitality.
         </p>
+        <p className="text-sm">
+          <Link href="/horoscopes/weekly" className="text-amber-300 underline mr-4">
+            Weekly horoscope
+          </Link>
+          <Link href="/horoscopes/monthly" className="text-amber-300 underline">
+            Monthly horoscope
+          </Link>
+        </p>
       </div>
 
       <AdBanner format="horizontal" label="SPONSORED ASTROLOGY FORECAST" />
