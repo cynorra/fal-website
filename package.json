@@ -17,7 +17,10 @@
     "content:rules": "node scripts/deploy-rules.mjs",
     "test:pipeline": "tsx --test scripts/pipeline/selftest.ts",
     "generate": "tsx scripts/pipeline/generate.ts",
-    "auto-publish": "tsx scripts/pipeline/auto-publish.ts"
+    "auto-publish": "tsx scripts/pipeline/auto-publish.ts",
+    "pretest:pipeline": "node scripts/sync-content.mjs",
+    "pregenerate": "node scripts/sync-content.mjs",
+    "preauto-publish": "node scripts/sync-content.mjs"
   },
   "dependencies": {
     "canvas-confetti": "^1.9.3",
