@@ -1,0 +1,52 @@
+name: Build and deploy to Cloudflare Pages
+
+on:
+  push:
+    branches: [main]
+  schedule:
+    # Daily rebuild so Moon transit and weekly/monthly horoscope pages stay current
+    - cron: "10 0 * * *"
+  workflow_dispatch: {}
+
+concurrency:
+  group: deploy
+  cancel-in-progress: true
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    env:
+      NEXT_PUBLIC_SITE_URL: https://horoscopesandcharts.com
+      NEXT_PUBLIC_CONTACT_EMAIL: ${{ vars.NEXT_PUBLIC_CONTACT_EMAIL }}
+      NEXT_PUBLIC_ADSENSE_CLIENT_ID: ${{ vars.NEXT_PUBLIC_ADSENSE_CLIENT_ID }}
+      NEXT_PUBLIC_ADSENSE_SLOT_ID: ${{ vars.NEXT_PUBLIC_ADSENSE_SLOT_ID }}
+      PROJECT: ${{ vars.CF_PAGES_PROJECT || 'horoscopesandcharts' }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+
+      - run: npm ci
+
+      - name: Build static site
+        run: npm run build:cf
+
+      - name: Create Pages project if it does not exist
+        uses: cloudflare/wrangler-action@v3
+        with:
+          apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+          command: pages project create ${{ env.PROJECT }} --production-branch main
+        continue-on-error: true
+
+      - name: Deploy to Cloudflare Pages
+        uses: cloudflare/wrangler-action@v3
+        with:
+          apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+          command: pages deploy out --project-name=${{ env.PROJECT }} --branch=main --commit-dirty=true
