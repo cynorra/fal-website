@@ -63,6 +63,38 @@ async function fetchCollection(key) {
   });
 }
 
+/** Published articles (collection "articles", native fields) whose publish time has passed, newest first. */
+async function fetchArticles() {
+  const url = `https://firestore.googleapis.com/v1/projects/${PROJECT}/databases/(default)/documents:runQuery`;
+  const body = JSON.stringify({
+    structuredQuery: {
+      from: [{ collectionId: "articles" }],
+      where: { fieldFilter: { field: { fieldPath: "status" }, op: "EQUAL", value: { stringValue: "published" } } },
+    },
+  });
+  let res;
+  for (let attempt = 1; attempt <= 6; attempt++) {
+    try {
+      res = await fetch(url, { method: "POST", headers: { "Content-Type": "application/json" }, body });
+      if (res.ok || ![403, 429, 500, 502, 503, 504].includes(res.status)) break;
+    } catch (e) {
+      if (attempt === 6) throw e;
+    }
+    await sleep(2000 * attempt);
+  }
+  if (!res.ok) throw new Error(`Firestore articles: ${res.status} ${res.statusText} ${await res.text()}`);
+  const now = new Date().toISOString();
+  return (await res.json())
+    .filter((x) => x.document)
+    .map((x) => Object.fromEntries(Object.entries(x.document.fields ?? {}).map(([k, v]) => [k, plain(v)])))
+    .filter((r) => r.status === "published" && r.published_at && r.published_at <= now)
+    // Only what the page needs: the audit/review data and drafts' internals never reach the site.
+    .map(({ slug, title, description, body_html, faqs, cluster, published_at, content_updated_at }) => ({
+      slug, title, description, body_html, faqs: faqs ?? [], cluster, published_at, content_updated_at: content_updated_at ?? null,
+    }))
+    .sort((a, b) => b.published_at.localeCompare(a.published_at));
+}
+
 if (!PROJECT) {
   writeFileSync(out, "{}\n");
   console.log("sync-content: FIREBASE_PROJECT_ID not set, using the content that ships in code.");
@@ -78,6 +110,8 @@ if (!PROJECT) {
     data[ds.key] = fromDocs(ds, rows);
     docs += rows.length;
   }
+  data.articles = await fetchArticles();
   writeFileSync(out, JSON.stringify(data));
-  console.log(`sync-content: read ${docs} documents from Firestore project "${PROJECT}" (${Object.keys(data).length}/${DATASETS.length} datasets).`);
+  console.log(`sync-content: ${data.articles.length} published article(s).`);
+  console.log(`sync-content: read ${docs} documents from Firestore project "${PROJECT}" (${Object.keys(data).filter((k) => k !== "articles").length}/${DATASETS.length} datasets).`);
 }

@@ -14,7 +14,10 @@
     "prebuild:cf": "node scripts/sync-content.mjs",
     "content:export": "tsx scripts/export-content.mjs",
     "content:push": "node scripts/push-content.mjs",
-    "content:rules": "node scripts/deploy-rules.mjs"
+    "content:rules": "node scripts/deploy-rules.mjs",
+    "test:pipeline": "tsx --test scripts/pipeline/selftest.ts",
+    "generate": "tsx scripts/pipeline/generate.ts",
+    "auto-publish": "tsx scripts/pipeline/auto-publish.ts"
   },
   "dependencies": {
     "canvas-confetti": "^1.9.3",
@@ -27,6 +30,7 @@
     "tailwind-merge": "^2.5.4"
   },
   "devDependencies": {
+    "@google/genai": "^2.32.0",
     "@types/canvas-confetti": "^1.9.0",
     "@types/node": "^20.17.0",
     "@types/react": "^18.3.11",

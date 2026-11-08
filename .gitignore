@@ -46,3 +46,6 @@ next-env.d.ts
 
 # Firebase service account keys (never commit)
 *firebase-adminsdk*.json
+
+# generator dry runs
+/.dry-run/

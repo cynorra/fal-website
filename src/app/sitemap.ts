@@ -7,6 +7,7 @@ import { LIFE_PATH_ENTRIES } from "@/lib/life-path-data";
 import { ANIMAL_PROFILES } from "@/lib/chinese-zodiac-data";
 import { MONTHS, ELEMENTS } from "@/lib/zodiac-calendar";
 import { CURATED_PAIRS } from "@/lib/compatibility-data";
+import { ARTICLES } from "@/lib/articles";
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const baseUrl = SITE_URL;
@@ -109,6 +110,19 @@ export default function sitemap(): MetadataRoute.Sitemap {
     priority: 0.7,
   }));
 
-  return [...staticRoutes, ...monthRoutes, ...elementRoutes, ...dreamRoutes, ...symbolRoutes, ...horoscopeRoutes, ...lifePathRoutes, ...animalRoutes, ...yearRoutes, ...compatibilityRoutes];
+  const blogRoutes =
+    ARTICLES.length === 0
+      ? []
+      : [
+          { url: `${baseUrl}/blog`, lastModified: new Date(ARTICLES[0].published_at), changeFrequency: "weekly" as const, priority: 0.8 },
+          ...ARTICLES.map((a) => ({
+            url: `${baseUrl}/blog/${a.slug}`,
+            lastModified: new Date(a.content_updated_at ?? a.published_at),
+            changeFrequency: "monthly" as const,
+            priority: 0.8,
+          })),
+        ];
+
+  return [...staticRoutes, ...blogRoutes, ...monthRoutes, ...elementRoutes, ...dreamRoutes, ...symbolRoutes, ...horoscopeRoutes, ...lifePathRoutes, ...animalRoutes, ...yearRoutes, ...compatibilityRoutes];
 }
 

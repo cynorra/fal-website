@@ -1,0 +1,52 @@
+# Daily article pipeline (adapted from aiandsoftwarehub / practice-test-daily):
+#   generate.ts      -> one draft (Gemini + deterministic gates), written to Firestore as status "draft"
+#   auto-publish.ts --apply -> independent AI audit (fails closed), publishes the passers
+#   then dispatch deploy.yml so the site is rebuilt with the new article
+#
+# The cron is OFF until the first articles have been read by hand (playbook rule 10).
+# Run it from the Actions tab (workflow_dispatch), read what it wrote, then uncomment the schedule.
+#
+# Secrets: GEMINI_API_KEY, FIREBASE_SERVICE_ACCOUNT (this job only; the deploy job never gets the service account)
+name: Daily Auto-Blog Generator & Publisher
+
+on:
+  workflow_dispatch:
+  # schedule:
+  #   - cron: "0 4 * * *"   # 04:00 UTC; deploy.yml rebuilds at 00:10 UTC and on dispatch
+
+permissions:
+  contents: read
+  actions: write
+
+concurrency:
+  group: auto-blog
+  cancel-in-progress: false
+
+jobs:
+  generate:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci
+      - name: Pipeline self-test (the quality gates)
+        run: npm run test:pipeline
+      - name: Generate one draft
+        run: npx tsx scripts/pipeline/generate.ts
+        env:
+          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+          FIREBASE_SERVICE_ACCOUNT: ${{ secrets.FIREBASE_SERVICE_ACCOUNT }}
+      - name: Audit drafts and publish the passers
+        run: npx tsx scripts/pipeline/auto-publish.ts --apply
+        env:
+          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+          FIREBASE_SERVICE_ACCOUNT: ${{ secrets.FIREBASE_SERVICE_ACCOUNT }}
+      - name: Deploy
+        run: gh workflow run deploy.yml
+        continue-on-error: true
+        env:
+          GH_TOKEN: ${{ github.token }}

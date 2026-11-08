@@ -1,6 +1,7 @@
 import React from "react";
 import Link from "next/link";
 import { Sparkles, Heart, Shield, BookOpen, Compass, Mail, Moon } from "lucide-react";
+import { ARTICLES } from "@/lib/articles";
 
 export function Footer() {
   return (
@@ -48,6 +49,13 @@ export function Footer() {
                   Angel Numbers & Codes
                 </Link>
               </li>
+              {ARTICLES.length > 0 && (
+                <li>
+                  <Link href="/blog" className="hover:text-amber-300 transition-colors">
+                    Guides &amp; Explainers
+                  </Link>
+                </li>
+              )}
               <li>
                 <Link href="/zodiac-signs" className="hover:text-amber-300 transition-colors">
                   Zodiac Signs &amp; Dates
