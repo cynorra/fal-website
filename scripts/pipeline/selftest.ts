@@ -15,6 +15,9 @@ import { whyTopicRefused } from './lib/policy';
 import { pickEditorialForm, EDITORIAL_FORMS } from './lib/forms';
 import { chartExampleFor, findExampleUsageIssues } from './lib/evidence';
 import { ZODIAC_SIGNS } from '../../src/lib/horoscopes-data';
+import { readdirSync, readFileSync } from 'node:fs';
+import { join } from 'node:path';
+import { isDuplicateTopic, slugify } from './lib/shared';
 import { repairMechanical } from './lib/repair';
 import { findFactsBlockCopy, findRepeatedSentences, findInventedQuotes } from './lib/copy-check';
 
@@ -90,6 +93,39 @@ test('every seed topic passes the topic gate (and links point at real pages)', (
   for (const t of TOPICS) assert.deepEqual(findTopicIssues(t), [], t.title);
   const bad = { ...TOPICS[0], links: ['/no-such-page'] };
   assert.equal(findTopicIssues(bad).length, 1);
+});
+
+test('topic queue is consistent: keyword in title, no duplicates, volumes match the export', () => {
+  const words = (x: string) => x.toLowerCase().split(/[^a-z0-9]+/).filter(Boolean);
+  const slugs = new Set<string>();
+  for (const t of TOPICS) {
+    const title = new Set(words(t.title));
+    const missing = words(t.keyword).filter((w) => !title.has(w));
+    assert.deepEqual(missing, [], `keyword "${t.keyword}" must have all its words in the title "${t.title}" (the keyword gate requires it)`);
+    assert.ok(!slugs.has(slugify(t.title)), `duplicate slug: ${t.title}`);
+    slugs.add(slugify(t.title));
+  }
+  const originalWarn = console.warn;
+  console.warn = () => {};
+  try {
+    TOPICS.forEach((t, i) => assert.equal(isDuplicateTopic(t.title, TOPICS.slice(0, i).map((x) => x.title)), false, `too similar to an earlier topic: ${t.title}`));
+  } finally {
+    console.warn = originalWarn;
+  }
+  // The Keyword Planner CSVs sit untracked in the repo root: when present, every non-zero volume must match them.
+  const root = join(import.meta.dirname, '..', '..');
+  const files = readdirSync(root).filter((f) => /^Keyword Stats .*\.csv$/.test(f));
+  if (files.length) {
+    const vol = new Map<string, number>();
+    for (const f of files) {
+      const lines = new TextDecoder('utf-16le').decode(readFileSync(join(root, f))).split(/\r?\n/).slice(2);
+      for (const l of lines) {
+        const c = l.split('\t');
+        if (c.length > 2 && /^\d+$/.test(c[2])) vol.set(c[0], Number(c[2]));
+      }
+    }
+    for (const t of TOPICS) if (t.volume > 0) assert.equal(vol.get(t.keyword), t.volume, `"${t.keyword}": volume ${t.volume} is not what the export says (${vol.get(t.keyword)})`);
+  }
 });
 
 test('hype and claims gates', () => {
