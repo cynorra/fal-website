@@ -3,7 +3,8 @@ import { notFound } from "next/navigation";
 import { Metadata } from "next";
 import Link from "next/link";
 import { ArrowLeft } from "lucide-react";
-import { LIFE_PATH_ENTRIES, LIFE_PATH_BY_NUMBER } from "@/lib/life-path-data";
+import { LIFE_PATH_ENTRIES, LIFE_PATH_BY_NUMBER, calculateLifePath } from "@/lib/life-path-data";
+import { LIFE_PATH_DEEP } from "@/lib/life-path-deep";
 import { AdBanner } from "@/components/ui/AdBanner";
 import { SITE_URL } from "@/lib/site";
 
@@ -60,6 +61,11 @@ export default function LifePathDetail({ params }: Props) {
     ],
   };
 
+  const deep = LIFE_PATH_DEEP[e.number];
+  const MONTH_NAMES = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+  const ex = deep?.example ?? [1, 1, 2000];
+  const example = calculateLifePath(ex[2], ex[0], ex[1]);
+  const exDate = `${MONTH_NAMES[ex[0] - 1]} ${ex[1]}, ${ex[2]}`;
   const related = [...e.compatibility.best, ...e.compatibility.challenging].filter(
     (n, i, a) => a.indexOf(n) === i && LIFE_PATH_BY_NUMBER[n]
   );
@@ -125,6 +131,30 @@ export default function LifePathDetail({ params }: Props) {
       <Section title="Money">
         <p>{e.money}</p>
       </Section>
+
+      {deep && (
+        <>
+          <Section title={`Life Path ${e.number} with friends and family`}>
+            <p>{deep.friends}</p>
+          </Section>
+          <Section title="Health and daily habits">
+            <p>{deep.health}</p>
+          </Section>
+          <Section title={`What people get wrong about Life Path ${e.number}`}>
+            <p>{deep.misread}</p>
+          </Section>
+          <Section title={`A worked example: how a birth date becomes Life Path ${e.number}`}>
+            <p>
+              Take {exDate}. {example.steps.join("; ")}. The result is Life Path {example.number}
+              {example.number === e.number ? "." : ", not " + e.number + "."}
+            </p>
+            <p>Use the same steps with your own birth date, or try the calculator on the Life Path Number tool page.</p>
+          </Section>
+          <Section title="One habit to try this week">
+            <p>{deep.dayToDay}</p>
+          </Section>
+        </>
+      )}
 
       <Section title="Compatibility">
         <p>
