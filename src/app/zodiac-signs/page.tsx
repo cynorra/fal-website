@@ -6,6 +6,7 @@ import { ZODIAC_PROFILE_BY_ID } from "@/lib/zodiac-profiles";
 import { SignFinder } from "@/components/interactive/SignFinder";
 import { AdBanner } from "@/components/ui/AdBanner";
 import { SITE_URL } from "@/lib/site";
+import { MONTHS } from "@/lib/zodiac-calendar";
 
 export const metadata: Metadata = {
   title: "Zodiac Signs & Dates: Complete Chart of All 12 Signs | AuraPulse",
@@ -137,7 +138,11 @@ export default function ZodiacSignsPage() {
         <div className="grid sm:grid-cols-2 gap-4">
           {ELEMENTS.map((e) => (
             <div key={e.name} className="glass-panel rounded-2xl p-5 border border-white/10">
-              <h3 className="font-serif font-bold text-white">{e.name} signs</h3>
+              <h3 className="font-serif font-bold text-white">
+                <Link href={`/zodiac-signs/element/${e.name.toLowerCase()}`} className="hover:text-amber-300">
+                  {e.name} signs
+                </Link>
+              </h3>
               <p className="text-xs text-white/60 mt-1">{e.text}</p>
               <p className="mt-2 text-sm">
                 {e.signs.map((id, n) => (
@@ -152,6 +157,37 @@ export default function ZodiacSignsPage() {
             </div>
           ))}
         </div>
+      </section>
+
+      <section className="space-y-4">
+        <h2 className="text-2xl font-serif font-bold text-white">Zodiac signs by month</h2>
+        <p>Born in a certain month? See which two signs share it, the day-by-day split and the cusp dates.</p>
+        <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
+          {MONTHS.map((m) => (
+            <Link
+              key={m.slug}
+              href={`/zodiac-signs/month/${m.slug}`}
+              className="glass-panel rounded-xl p-3 border border-white/10 hover:border-purple-400/40 transition-colors block text-center"
+            >
+              <span className="block font-serif font-semibold text-white">{m.name}</span>
+              <span className="block text-xs text-amber-300 mt-1">
+                {m.segments.map(([id]) => byId[id].symbol).join(" ")}
+              </span>
+            </Link>
+          ))}
+        </div>
+        <p className="text-sm">
+          Explore by element:{" "}
+          {ELEMENTS.map((e, n) => (
+            <React.Fragment key={e.name}>
+              {n > 0 && ", "}
+              <Link href={`/zodiac-signs/element/${e.name.toLowerCase()}`} className="text-amber-300 hover:text-white">
+                {e.name} signs
+              </Link>
+            </React.Fragment>
+          ))}
+          .
+        </p>
       </section>
 
       <section className="space-y-4">

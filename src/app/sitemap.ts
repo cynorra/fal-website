@@ -5,6 +5,7 @@ import { ZODIAC_SIGNS } from "@/lib/horoscopes-data";
 import { SITE_URL } from "@/lib/site";
 import { LIFE_PATH_ENTRIES } from "@/lib/life-path-data";
 import { ANIMAL_PROFILES } from "@/lib/chinese-zodiac-data";
+import { MONTHS, ELEMENTS } from "@/lib/zodiac-calendar";
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const baseUrl = SITE_URL;
@@ -92,6 +93,19 @@ export default function sitemap(): MetadataRoute.Sitemap {
     }))
   );
 
-  return [...staticRoutes, ...dreamRoutes, ...symbolRoutes, ...horoscopeRoutes, ...lifePathRoutes, ...animalRoutes, ...yearRoutes, ...compatibilityRoutes];
+  const monthRoutes = MONTHS.map((m) => ({
+    url: `${baseUrl}/zodiac-signs/month/${m.slug}`,
+    lastModified: new Date(),
+    changeFrequency: "yearly" as const,
+    priority: 0.7,
+  }));
+  const elementRoutes = ELEMENTS.map((e) => ({
+    url: `${baseUrl}/zodiac-signs/element/${e.slug}`,
+    lastModified: new Date(),
+    changeFrequency: "yearly" as const,
+    priority: 0.7,
+  }));
+
+  return [...staticRoutes, ...monthRoutes, ...elementRoutes, ...dreamRoutes, ...symbolRoutes, ...horoscopeRoutes, ...lifePathRoutes, ...animalRoutes, ...yearRoutes, ...compatibilityRoutes];
 }
 
