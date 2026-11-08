@@ -69,7 +69,8 @@ export default function RootLayout({
   return (
     <html lang="en" className="dark">
       <head>
-        {ADSENSE_CLIENT_ID && (
+        {/* Use a ternary: `"" && ...` would render an empty text node inside <head> and break hydration */}
+        {ADSENSE_CLIENT_ID ? (
           <>
             <meta name="google-adsense-account" content={ADSENSE_CLIENT_ID} />
             <script
@@ -78,7 +79,7 @@ export default function RootLayout({
               crossOrigin="anonymous"
             />
           </>
-        )}
+        ) : null}
       </head>
       <body className="min-h-screen flex flex-col relative selection:bg-purple-500/30 selection:text-amber-300">
         <StarsBackground />
