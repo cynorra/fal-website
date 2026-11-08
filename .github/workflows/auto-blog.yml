@@ -3,16 +3,16 @@
 #   auto-publish.ts --apply -> independent AI audit (fails closed), publishes the passers
 #   then dispatch deploy.yml so the site is rebuilt with the new article
 #
-# The cron is OFF until the first articles have been read by hand (playbook rule 10).
-# Run it from the Actions tab (workflow_dispatch), read what it wrote, then uncomment the schedule.
+# The first article was read by hand on 2026-11-08 (playbook rule 10), so the schedule is ON.
+# To pause the automation, comment the schedule block out again.
 #
 # Secrets: GEMINI_API_KEY, FIREBASE_SERVICE_ACCOUNT (this job only; the deploy job never gets the service account)
 name: Daily Auto-Blog Generator & Publisher
 
 on:
   workflow_dispatch:
-  # schedule:
-  #   - cron: "0 4 * * *"   # 04:00 UTC; deploy.yml rebuilds at 00:10 UTC and on dispatch
+  schedule:
+    - cron: "0 4 * * *"   # 04:00 UTC; the job dispatches deploy.yml itself (deploy.yml also rebuilds at 00:10 UTC)
 
 permissions:
   contents: read
