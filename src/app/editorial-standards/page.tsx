@@ -28,14 +28,14 @@ export default function EditorialStandardsPage() {
       <section className="space-y-3">
         <h2 className="text-xl font-serif font-bold text-white">2. Astrological Calculations</h2>
         <p>
-          Our planetary transits, moon phase calculators, and rising sign engines utilize precise astronomical algorithms derived from NASA and Swiss Ephemeris data models to ensure mathematical integrity.
+          Our planetary transits, moon phase calculators, and rising sign engines use standard astronomical formulas (such as the mean synodic month for moon phases and sidereal time for rising signs). Results are approximations intended for reflection, not professional ephemeris output.
         </p>
       </section>
 
       <section className="space-y-3">
         <h2 className="text-xl font-serif font-bold text-white">3. Original Content & Quality Control</h2>
         <p>
-          We do not publish auto-generated thin content. Every guide is drafted, fact-checked against mythological archives, and edited by our dedicated team of esoteric researchers.
+          We do not publish auto-generated thin content. Every guide is written and reviewed by the AuraPulse editorial team, checked against published psychological and mythological sources, and updated when we find errors.
         </p>
       </section>
     </article>

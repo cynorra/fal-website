@@ -7,10 +7,12 @@ import { AdBanner } from "@/components/ui/AdBanner";
 import { formatDate } from "@/lib/utils";
 
 export const metadata: Metadata = {
-  title: "Daily Horoscopes for All 12 Signs | AuraPulse Astrology",
+  title: "Horoscope Today: All 12 Zodiac Signs, Traits & Dates | AuraPulse",
   description:
-    "Read your personalized daily astrology forecast for Aries, Taurus, Gemini, Cancer, Leo, Virgo, Libra, Scorpio, Sagittarius, Capricorn, Aquarius, and Pisces.",
+    "Horoscope today for every zodiac sign: Aries, Taurus, Gemini, Cancer, Leo, Virgo, Libra, Scorpio, Sagittarius, Capricorn, Aquarius and Pisces, with personality, dates, compatibility and today's Moon transit.",
 };
+
+export const revalidate = 3600; // refresh the displayed date hourly
 
 export default function HoroscopesHubPage() {
   const todayFormatted = formatDate();

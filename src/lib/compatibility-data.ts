@@ -1,3 +1,5 @@
+import { aspectBetween } from "./aspects";
+
 export interface CompatibilityReport {
   signA: string;
   signB: string;
@@ -370,6 +372,14 @@ export function calculateCompatibility(signA: string, signB: string): Compatibil
     ],
     cosmicAdvice = `Make conscious room for playful emotional intimacy rather than treating the relationship strictly as an efficient logistics firm.`;
   }
+
+  const ZODIAC_ORDER = ["aries", "taurus", "gemini", "cancer", "leo", "virgo", "libra", "scorpio", "sagittarius", "capricorn", "aquarius", "pisces"];
+  const adj = aspectBetween(ZODIAC_ORDER.indexOf(normA), ZODIAC_ORDER.indexOf(normB)).adjust;
+  const clamp = (n: number) => Math.max(55, Math.min(99, n));
+  overall = clamp(overall + adj.overall);
+  love = clamp(love + adj.love);
+  comm = clamp(comm + adj.comm);
+  chem = clamp(chem + adj.chem);
 
   return {
     signA: nameA,

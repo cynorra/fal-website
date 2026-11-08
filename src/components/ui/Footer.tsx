@@ -28,7 +28,7 @@ export function Footer() {
                 SSL Encrypted
               </span>
               <span>•</span>
-              <span>AdSense Verified Publisher Standard</span>
+              <span>Free to use • No account required</span>
             </div>
           </div>
 
@@ -40,12 +40,22 @@ export function Footer() {
             <ul className="space-y-2.5 text-sm">
               <li>
                 <Link href="/dreams" className="hover:text-amber-300 transition-colors">
-                  Dream Dictionary (100+)
+                  Dream Dictionary
                 </Link>
               </li>
               <li>
                 <Link href="/symbols" className="hover:text-amber-300 transition-colors">
                   Angel Numbers & Codes
+                </Link>
+              </li>
+              <li>
+                <Link href="/zodiac-signs" className="hover:text-amber-300 transition-colors">
+                  Zodiac Signs &amp; Dates
+                </Link>
+              </li>
+              <li>
+                <Link href="/chinese-zodiac" className="hover:text-amber-300 transition-colors">
+                  Chinese Zodiac Calculator
                 </Link>
               </li>
               <li>
@@ -85,6 +95,16 @@ export function Footer() {
               <li>
                 <Link href="/tools/aura-quiz" className="hover:text-amber-300 transition-colors">
                   7-Step Aura Color Quiz
+                </Link>
+              </li>
+              <li>
+                <Link href="/tools/birth-chart" className="hover:text-amber-300 transition-colors">
+                  Free Birth Chart Calculator
+                </Link>
+              </li>
+              <li>
+                <Link href="/tools/life-path-number" className="hover:text-amber-300 transition-colors">
+                  Life Path Number Calculator
                 </Link>
               </li>
               <li>
@@ -136,7 +156,7 @@ export function Footer() {
             <strong className="text-white/60">Contemplative & Spiritual Disclaimer:</strong> AuraPulse offers dream interpretations, astrological calculations, tarot reflections, and numerological insights for self-reflection, mindfulness, and entertainment purposes. Our content does not constitute medical, legal, or licensed financial advice.
           </p>
           <div className="flex flex-col sm:flex-row items-center justify-between text-[11px] text-white/30 pt-4">
-            <p>© {new Date().getFullYear()} AuraPulse Network. All rights reserved.</p>
+            <p>© {new Date().getFullYear()} AuraPulse. All rights reserved.</p>
             <p className="mt-2 sm:mt-0 flex items-center">
               Crafted with <Heart className="w-3 h-3 text-rose-500 mx-1 fill-rose-500" /> for curious souls worldwide.
             </p>

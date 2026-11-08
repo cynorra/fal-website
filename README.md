@@ -48,3 +48,4 @@ Set your client ID in `.env.local`:
 NEXT_PUBLIC_ADSENSE_CLIENT_ID="ca-pub-XXXXXXXXXXXXXXXX"
 ```
 All responsive `AdBanner` placements (`in-article`, `horizontal`, `square`, `sticky-footer`) will automatically link with zero layout shift.
+

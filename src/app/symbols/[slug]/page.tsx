@@ -17,6 +17,8 @@ import {
   Scroll,
 } from "lucide-react";
 import { AdBanner } from "@/components/ui/AdBanner";
+import { SITE_URL } from "@/lib/site";
+import { SYMBOL_SEO_TITLES } from "@/lib/seo-titles";
 
 interface Props {
   params: { slug: string };
@@ -31,7 +33,7 @@ export function generateMetadata({ params }: Props): Metadata {
   if (!entry) return { title: "Symbol Meaning Not Found | AuraPulse" };
 
   return {
-    title: `${entry.title} | AuraPulse`,
+    title: `${SYMBOL_SEO_TITLES[entry.slug] ?? entry.title} | AuraPulse`,
     description: entry.tagline,
     openGraph: {
       title: entry.title,
@@ -56,7 +58,7 @@ export default function SymbolDetailPage({ params }: Props) {
         description: entry.tagline,
         author: {
           "@type": "Organization",
-          name: "AuraPulse Numerology & Sacred Symbology Guild",
+          name: "AuraPulse Editorial Team",
         },
         publisher: {
           "@type": "Organization",
@@ -64,7 +66,7 @@ export default function SymbolDetailPage({ params }: Props) {
         },
         mainEntityOfPage: {
           "@type": "WebPage",
-          "@id": `https://aurapulse.com/symbols/${entry.slug}`,
+          "@id": `${SITE_URL}/symbols/${entry.slug}`,
         },
       },
       {

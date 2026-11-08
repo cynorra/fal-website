@@ -3,6 +3,7 @@
 import React, { useState } from "react";
 import { Mail, Send, CheckCircle2, MessageSquare, Sparkles } from "lucide-react";
 import { AdBanner } from "@/components/ui/AdBanner";
+import { CONTACT_EMAIL } from "@/lib/site";
 
 export default function ContactPage() {
   const [submitted, setSubmitted] = useState(false);
@@ -10,6 +11,11 @@ export default function ContactPage() {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
+    const subject = encodeURIComponent(`[AuraPulse] ${formData.subject || "General Question"}`);
+    const body = encodeURIComponent(`${formData.message}
+
+— ${formData.name} (${formData.email})`);
+    window.location.href = `mailto:${CONTACT_EMAIL}?subject=${subject}&body=${body}`;
     setSubmitted(true);
   };
 
@@ -86,23 +92,25 @@ export default function ContactPage() {
               className="w-full py-3 rounded-full bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-purple-500 hover:to-indigo-500 text-white font-medium text-xs shadow-lg shadow-purple-950/50 transition-all duration-300 flex items-center justify-center space-x-2"
             >
               <Send className="w-3.5 h-3.5" />
-              <span>Transmit Message</span>
+              <span>Open in Email App</span>
             </button>
           </form>
         ) : (
           <div className="py-12 text-center space-y-4 animate-in fade-in duration-300">
             <CheckCircle2 className="w-12 h-12 text-emerald-400 mx-auto" />
-            <h3 className="text-2xl font-serif font-bold text-white">Message Transmitted</h3>
+            <h3 className="text-2xl font-serif font-bold text-white">Your email app should open</h3>
             <p className="text-xs sm:text-sm text-white/70 max-w-sm mx-auto">
-              Thank you for reaching out to AuraPulse. Our editorial team typically responds within 24–48 business hours.
+              If nothing opened, email us directly at the address below. We aim to reply within a few business days.
             </p>
           </div>
         )}
       </div>
 
       <div className="text-center text-xs text-white/40 space-y-1">
-        <p>AuraPulse Network • San Francisco & London</p>
-        <p>Direct Inquiries: support@aurapulse.com</p>
+        <p>
+          Direct inquiries:{" "}
+          <a href={`mailto:${CONTACT_EMAIL}`} className="text-amber-300 underline">{CONTACT_EMAIL}</a>
+        </p>
       </div>
 
       <AdBanner format="in-article" label="SANCTUARY SPONSOR" />

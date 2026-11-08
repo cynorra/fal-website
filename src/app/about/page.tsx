@@ -2,6 +2,7 @@ import React from "react";
 import { Metadata } from "next";
 import { Sparkles, ShieldCheck, Heart, Compass, BookOpen } from "lucide-react";
 import { AdBanner } from "@/components/ui/AdBanner";
+import { CONTACT_EMAIL } from "@/lib/site";
 
 export const metadata: Metadata = {
   title: "About Us | AuraPulse Cosmic Sanctuary",
@@ -44,7 +45,7 @@ export default function AboutPage() {
           <BookOpen className="w-6 h-6 text-purple-300 mx-auto" />
           <h3 className="font-serif font-bold text-sm text-white">Depth Research</h3>
           <p className="text-xs text-white/60">
-            Every entry references established psychological and mythological literature.
+            Entries draw on established psychological and mythological literature.
           </p>
         </div>
 
@@ -70,8 +71,8 @@ export default function AboutPage() {
           Contact Our Editorial Team
         </h2>
         <p className="text-sm">
-          Have an inquiry, dream story, or suggestion? We welcome reader feedback and scholarly contributions at{" "}
-          <strong className="text-amber-300">editorial@aurapulse.com</strong>.
+          Have an inquiry, dream story, or suggestion? We welcome reader feedback and corrections at{" "}
+          <a href={`mailto:${CONTACT_EMAIL}`} className="text-amber-300 underline">{CONTACT_EMAIL}</a>.
         </p>
       </section>
     </article>

@@ -38,6 +38,40 @@ export default function TermsPage() {
           All custom texts, calculators, algorithmic interpretations, and brand marks on AuraPulse are the exclusive property of the AuraPulse Network and protected under international copyright treaties.
         </p>
       </section>
+
+      <section className="space-y-3">
+        <h2 className="text-xl font-serif font-bold text-white">4. Disclaimer of Warranties</h2>
+        <p>
+          The site and its content are provided &ldquo;as is&rdquo; without warranties of any kind. Astrology, tarot, numerology and
+          dream interpretation are not scientifically proven predictive methods. Do not rely on them for medical, legal, financial
+          or other important decisions. If you are struggling with your mental health, please contact a qualified professional or a
+          local crisis service.
+        </p>
+      </section>
+
+      <section className="space-y-3">
+        <h2 className="text-xl font-serif font-bold text-white">5. Limitation of Liability</h2>
+        <p>
+          To the fullest extent permitted by law, AuraPulse is not liable for any damages arising from your use of, or inability to
+          use, the site or from decisions made based on its content.
+        </p>
+      </section>
+
+      <section className="space-y-3">
+        <h2 className="text-xl font-serif font-bold text-white">6. Advertising & Third-Party Links</h2>
+        <p>
+          The site displays advertising served by third parties such as Google AdSense and may link to external sites. We do not
+          endorse advertised products or external content. See our Privacy Policy for details.
+        </p>
+      </section>
+
+      <section className="space-y-3">
+        <h2 className="text-xl font-serif font-bold text-white">7. Acceptable Use & Changes</h2>
+        <p>
+          You agree not to scrape, copy at scale, disrupt, or generate artificial ad impressions or clicks on the site. We may change
+          these terms at any time; continued use means you accept the updated terms.
+        </p>
+      </section>
     </article>
   );
 }

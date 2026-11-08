@@ -18,6 +18,8 @@ import {
   Layers,
 } from "lucide-react";
 import { AdBanner } from "@/components/ui/AdBanner";
+import { SITE_URL } from "@/lib/site";
+import { DREAM_SEO_TITLES } from "@/lib/seo-titles";
 
 interface Props {
   params: { slug: string };
@@ -32,7 +34,7 @@ export function generateMetadata({ params }: Props): Metadata {
   if (!entry) return { title: "Dream Meaning Not Found | AuraPulse" };
 
   return {
-    title: `${entry.title} | AuraPulse`,
+    title: `${DREAM_SEO_TITLES[entry.slug] ?? entry.title} | AuraPulse`,
     description: entry.quickAnswer,
     openGraph: {
       title: entry.title,
@@ -58,19 +60,19 @@ export default function DreamDetailPage({ params }: Props) {
         description: entry.quickAnswer,
         author: {
           "@type": "Organization",
-          name: "AuraPulse Spiritual & Psychological Research Editorial",
+          name: "AuraPulse Editorial Team",
         },
         publisher: {
           "@type": "Organization",
           name: "AuraPulse",
           logo: {
             "@type": "ImageObject",
-            url: "https://aurapulse.com/favicon.ico",
+            url: `${SITE_URL}/icon.svg`,
           },
         },
         mainEntityOfPage: {
           "@type": "WebPage",
-          "@id": `https://aurapulse.com/dreams/${entry.slug}`,
+          "@id": `${SITE_URL}/dreams/${entry.slug}`,
         },
       },
       {
@@ -115,7 +117,7 @@ export default function DreamDetailPage({ params }: Props) {
             <Clock className="w-3.5 h-3.5 mr-1 text-amber-400" />
             {entry.readTime}
           </span>
-          <span className="text-xs text-white/40 font-mono">• Peer-Reviewed Archetypal Analysis</span>
+          <span className="text-xs text-white/40 font-mono">• Jungian Archetypal Analysis</span>
         </div>
         <h1 className="text-3xl sm:text-4xl lg:text-5xl font-serif font-black text-white leading-tight">
           {entry.title}

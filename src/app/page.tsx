@@ -122,7 +122,7 @@ export default function HomePage() {
                 <BookOpen className="w-5 h-5" />
               </div>
               <span className="text-xs uppercase tracking-widest text-purple-300/80 font-mono">
-                Encyclopedic Archives • 100+ Guides
+                Encyclopedic Archives • In-Depth Guides
               </span>
               <h3 className="text-xl sm:text-2xl font-serif font-bold text-white group-hover:text-amber-300 transition-colors">
                 Jungian Dream Dictionary
@@ -280,7 +280,7 @@ export default function HomePage() {
               Trending Dream Interpretations
             </h2>
             <p className="text-xs sm:text-sm text-white/60 mt-1">
-              In-depth psychological and spiritual decoders compiled by esoteric scholars.
+              In-depth psychological and spiritual decoders written by the AuraPulse editorial team.
             </p>
           </div>
           <Link

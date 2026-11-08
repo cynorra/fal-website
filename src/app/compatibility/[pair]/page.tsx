@@ -3,6 +3,7 @@ import { notFound } from "next/navigation";
 import { Metadata } from "next";
 import Link from "next/link";
 import { calculateCompatibility } from "@/lib/compatibility-data";
+import { ZODIAC_SIGNS } from "@/lib/horoscopes-data";
 import {
   Heart,
   Sparkles,
@@ -17,45 +18,53 @@ import {
   Compass,
 } from "lucide-react";
 import { AdBanner } from "@/components/ui/AdBanner";
+import { ZODIAC_PROFILE_BY_ID } from "@/lib/zodiac-profiles";
+import { aspectBetween, modalityText } from "@/lib/aspects";
 
 interface Props {
   params: { pair: string };
 }
 
+const SIGN_IDS = ZODIAC_SIGNS.map((z) => z.id);
+
+function parsePair(pair: string): [string, string] | null {
+  const parts = pair.split("-and-");
+  if (parts.length !== 2 || !SIGN_IDS.includes(parts[0]) || !SIGN_IDS.includes(parts[1])) return null;
+  return [parts[0], parts[1]];
+}
+
 export function generateStaticParams() {
-  const common = [
-    "aries-and-leo",
-    "taurus-and-virgo",
-    "gemini-and-libra",
-    "cancer-and-scorpio",
-    "aries-and-scorpio",
-    "leo-and-sagittarius",
-    "capricorn-and-taurus",
-    "aquarius-and-gemini",
-    "pisces-and-cancer",
-  ];
-  return common.map((p) => ({ pair: p }));
+  return SIGN_IDS.flatMap((a) => SIGN_IDS.map((b) => ({ pair: `${a}-and-${b}` })));
 }
 
 export function generateMetadata({ params }: Props): Metadata {
-  const parts = params.pair.split("-and-");
-  if (parts.length !== 2) return { title: "Compatibility Not Found | AuraPulse" };
+  const parts = parsePair(params.pair);
+  if (!parts) return { title: "Compatibility Not Found | AuraPulse", robots: { index: false } };
+  const canonicalSlug = [...parts].sort((x, y) => SIGN_IDS.indexOf(x) - SIGN_IDS.indexOf(y)).join("-and-");
 
   const nameA = parts[0].charAt(0).toUpperCase() + parts[0].slice(1);
   const nameB = parts[1].charAt(0).toUpperCase() + parts[1].slice(1);
 
   return {
-    title: `${nameA} & ${nameB} Compatibility: Love, Chemistry & Synastry Dossier | AuraPulse`,
+    title: `${nameA} and ${nameB} Compatibility: Love, Chemistry & Match | AuraPulse`,
     description: `Complete relationship analysis for ${nameA} and ${nameB}. Explore elemental alchemy, bedroom chemistry, communication traps, and long-term marriage potential.`,
+    alternates: { canonical: `/compatibility/${canonicalSlug}` },
   };
 }
 
 export default function PairCompatibilityPage({ params }: Props) {
-  const parts = params.pair.split("-and-");
-  if (parts.length !== 2) notFound();
+  const parts = parsePair(params.pair);
+  if (!parts) notFound();
 
   const [signA, signB] = parts;
   const report = calculateCompatibility(signA, signB);
+  const ia = SIGN_IDS.indexOf(signA);
+  const ib = SIGN_IDS.indexOf(signB);
+  const aspect = aspectBetween(ia, ib);
+  const pa = ZODIAC_PROFILE_BY_ID[signA];
+  const pb = ZODIAC_PROFILE_BY_ID[signB];
+  const nA = report.signA;
+  const nB = report.signB;
 
   return (
     <article className="max-w-4xl mx-auto py-8 space-y-12">
@@ -96,7 +105,7 @@ export default function PairCompatibilityPage({ params }: Props) {
           {report.overallScore}%
         </div>
         <p className="text-xs text-white/60 max-w-md mx-auto">
-          Derived from classical Ptolemaic aspects, elemental triplicities, and Jungian archetype dynamics.
+          Based on the elements of the two signs and the astrological aspect between them.
         </p>
 
         {/* 3 Metric Bars */}
@@ -129,6 +138,60 @@ export default function PairCompatibilityPage({ params }: Props) {
         </h2>
         <p className="text-sm sm:text-base text-white/85 leading-relaxed font-light">
           {report.elementalDynamic}
+        </p>
+      </section>
+
+      {/* Aspect and modality (pair-specific astrology) */}
+      <section className="glass-panel rounded-3xl p-6 sm:p-8 border border-white/10 space-y-3">
+        <h2 className="text-xl sm:text-2xl font-serif font-bold text-white">
+          {nA} and {nB}: the astrological aspect
+        </h2>
+        <p className="text-sm sm:text-base text-white/85 leading-relaxed font-light">
+          <strong className="text-white">{aspect.name}.</strong> {aspect.text}
+        </p>
+        <p className="text-sm sm:text-base text-white/85 leading-relaxed font-light">{modalityText(ia, ib)}</p>
+        <p className="text-xs text-white/50">
+          Scores on this page start from the elements of the two signs and are adjusted by their aspect. They are a playful
+          reflection tool, not a prediction.
+        </p>
+      </section>
+
+      <section className="glass-panel rounded-3xl p-6 sm:p-8 border border-white/10 space-y-4">
+        <h2 className="text-xl sm:text-2xl font-serif font-bold text-white">
+          How {nA} and {nB} approach love
+        </h2>
+        <div>
+          <h3 className="font-serif font-bold text-white">{nA} in love</h3>
+          <p className="text-sm sm:text-base text-white/85 leading-relaxed font-light">{pa.loveStyle}</p>
+        </div>
+        <div>
+          <h3 className="font-serif font-bold text-white">{nB} in love</h3>
+          <p className="text-sm sm:text-base text-white/85 leading-relaxed font-light">{pb.loveStyle}</p>
+        </div>
+        <div className="grid sm:grid-cols-2 gap-6 text-sm text-white/80 font-light">
+          <div>
+            <h3 className="font-serif font-bold text-white mb-1">{nA} brings</h3>
+            <p>{pa.strengths.join(", ")}.</p>
+            <h3 className="font-serif font-bold text-white mt-3 mb-1">{nA} should watch</h3>
+            <p>{pa.weaknesses.join(", ")}.</p>
+          </div>
+          <div>
+            <h3 className="font-serif font-bold text-white mb-1">{nB} brings</h3>
+            <p>{pb.strengths.join(", ")}.</p>
+            <h3 className="font-serif font-bold text-white mt-3 mb-1">{nB} should watch</h3>
+            <p>{pb.weaknesses.join(", ")}.</p>
+          </div>
+        </div>
+        <p className="text-sm text-white/70">
+          Read the full profiles:{" "}
+          <Link href={`/horoscopes/${signA}`} className="text-amber-300 underline">
+            {nA}
+          </Link>{" "}
+          and{" "}
+          <Link href={`/horoscopes/${signB}`} className="text-amber-300 underline">
+            {nB}
+          </Link>
+          .
         </p>
       </section>
 
