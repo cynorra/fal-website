@@ -16,7 +16,7 @@ export function Footer() {
                 </div>
               </div>
               <span className="font-serif text-xl font-bold tracking-wider text-white">
-                Aura<span className="gold-gradient-text font-serif">Pulse</span>
+                Horoscopes<span className="gold-gradient-text font-serif"> &amp; Charts</span>
               </span>
             </Link>
             <p className="text-sm text-white/60 leading-relaxed max-w-sm">
@@ -123,7 +123,7 @@ export function Footer() {
             <ul className="space-y-2.5 text-sm">
               <li>
                 <Link href="/about" className="hover:text-amber-300 transition-colors">
-                  About AuraPulse
+                  About Horoscopes and Charts
                 </Link>
               </li>
               <li>
@@ -153,10 +153,10 @@ export function Footer() {
         {/* Disclaimer Notice (crucial for AdSense approval in esoteric/horoscope niche) */}
         <div className="mt-12 pt-8 border-t border-white/10 text-xs text-white/40 space-y-3">
           <p className="leading-relaxed">
-            <strong className="text-white/60">Contemplative & Spiritual Disclaimer:</strong> AuraPulse offers dream interpretations, astrological calculations, tarot reflections, and numerological insights for self-reflection, mindfulness, and entertainment purposes. Our content does not constitute medical, legal, or licensed financial advice.
+            <strong className="text-white/60">Contemplative & Spiritual Disclaimer:</strong> Horoscopes and Charts offers dream interpretations, astrological calculations, tarot reflections, and numerological insights for self-reflection, mindfulness, and entertainment purposes. Our content does not constitute medical, legal, or licensed financial advice.
           </p>
           <div className="flex flex-col sm:flex-row items-center justify-between text-[11px] text-white/30 pt-4">
-            <p>© {new Date().getFullYear()} AuraPulse. All rights reserved.</p>
+            <p>© {new Date().getFullYear()} Horoscopes and Charts. All rights reserved.</p>
             <p className="mt-2 sm:mt-0 flex items-center">
               Crafted with <Heart className="w-3 h-3 text-rose-500 mx-1 fill-rose-500" /> for curious souls worldwide.
             </p>

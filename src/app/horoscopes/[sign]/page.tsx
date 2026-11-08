@@ -22,10 +22,10 @@ export function generateStaticParams() {
 
 export function generateMetadata({ params }: Props): Metadata {
   const sign = ZODIAC_SIGNS.find((s) => s.id === params.sign);
-  if (!sign) return { title: "Zodiac Sign Not Found | AuraPulse", robots: { index: false } };
+  if (!sign) return { title: "Zodiac Sign Not Found | Horoscopes and Charts", robots: { index: false } };
   const desc = `${sign.name} horoscope and zodiac sign guide (${sign.dates}): personality traits, strengths, love, career, compatibility, rising and moon sign meaning, plus today's Moon transit for ${sign.name}.`;
   return {
-    title: `${sign.name} Horoscope: Personality, Dates & Compatibility | AuraPulse`,
+    title: `${sign.name} Horoscope: Personality, Dates & Compatibility | Horoscopes and Charts`,
     description: desc,
     openGraph: { title: `${sign.name} Horoscope, Personality & Compatibility`, description: desc, type: "article" },
   };
@@ -76,8 +76,8 @@ export default function SignDetailPage({ params }: Props) {
         "@type": "Article",
         headline: `${sign.name} Horoscope: Personality, Dates & Compatibility`,
         description: profile.tagline,
-        author: { "@type": "Organization", name: "AuraPulse Editorial Team" },
-        publisher: { "@type": "Organization", name: "AuraPulse" },
+        author: { "@type": "Organization", name: "Horoscopes and Charts Editorial Team" },
+        publisher: { "@type": "Organization", name: "Horoscopes and Charts" },
         mainEntityOfPage: `${SITE_URL}/horoscopes/${sign.id}`,
       },
       {

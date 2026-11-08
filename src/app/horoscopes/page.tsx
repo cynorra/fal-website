@@ -7,7 +7,7 @@ import { AdBanner } from "@/components/ui/AdBanner";
 import { formatDate } from "@/lib/utils";
 
 export const metadata: Metadata = {
-  title: "Horoscope Today: All 12 Zodiac Signs, Traits & Dates | AuraPulse",
+  title: "Horoscope Today: All 12 Zodiac Signs, Traits & Dates | Horoscopes and Charts",
   description:
     "Horoscope today for every zodiac sign: Aries, Taurus, Gemini, Cancer, Leo, Virgo, Libra, Scorpio, Sagittarius, Capricorn, Aquarius and Pisces, with personality, dates, compatibility and today's Moon transit.",
 };

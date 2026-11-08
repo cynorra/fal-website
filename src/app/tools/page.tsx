@@ -5,7 +5,7 @@ import { Moon, Sparkles, Compass, Heart, ArrowRight, ShieldCheck, Flame, Layers 
 import { AdBanner } from "@/components/ui/AdBanner";
 
 export const metadata: Metadata = {
-  title: "Interactive Esoteric Tools & Quizzes | AuraPulse",
+  title: "Interactive Esoteric Tools & Quizzes | Horoscopes and Charts",
   description:
     "Test your celestial resonance with our Moon Phase Soulmate Matcher, Daily Tarot Draw, 7-Step Aura Color Quiz, and Rising Sign Calculator.",
 };

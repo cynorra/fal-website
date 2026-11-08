@@ -3,9 +3,9 @@ import { Metadata } from "next";
 import { CONTACT_EMAIL } from "@/lib/site";
 
 export const metadata: Metadata = {
-  title: "Privacy Policy | AuraPulse",
+  title: "Privacy Policy | Horoscopes and Charts",
   description:
-    "AuraPulse Privacy Policy: cookies, Google AdSense advertising, local-only calculators, GDPR/CCPA rights and how to contact us.",
+    "Horoscopes and Charts Privacy Policy: cookies, Google AdSense advertising, local-only calculators, GDPR/CCPA rights and how to contact us.",
 };
 
 const ext = "text-amber-300 underline";
@@ -23,7 +23,7 @@ export default function PrivacyPolicyPage() {
       <section className="space-y-3">
         <h2 className="text-xl font-serif font-bold text-white">1. Introduction</h2>
         <p>
-          AuraPulse (&ldquo;we,&rdquo; &ldquo;our,&rdquo; or &ldquo;us&rdquo;) respects your privacy. This policy explains what
+          Horoscopes and Charts (&ldquo;we,&rdquo; &ldquo;our,&rdquo; or &ldquo;us&rdquo;) respects your privacy. This policy explains what
           information is collected when you visit this website, how it is used, and the choices you have. By using the site you
           agree to this policy.
         </p>
@@ -125,7 +125,7 @@ export default function PrivacyPolicyPage() {
       <section className="space-y-3">
         <h2 className="text-xl font-serif font-bold text-white">8. Children&apos;s Privacy</h2>
         <p>
-          AuraPulse is not directed to children under 13 (or under 16 where local law requires), and we do not knowingly collect
+          Horoscopes and Charts is not directed to children under 13 (or under 16 where local law requires), and we do not knowingly collect
           personal information from children. If you believe a child has provided us data, contact us and we will delete it.
         </p>
       </section>

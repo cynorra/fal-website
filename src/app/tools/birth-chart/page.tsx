@@ -8,7 +8,7 @@ import { AdBanner } from "@/components/ui/AdBanner";
 import { SITE_URL } from "@/lib/site";
 
 export const metadata: Metadata = {
-  title: "Free Birth Chart Calculator: Natal Chart with Rising Sign | AuraPulse",
+  title: "Free Birth Chart Calculator: Natal Chart with Rising Sign | Horoscopes and Charts",
   description:
     "Free birth chart calculator (natal chart): enter your birth date, time and city to see your Sun, Moon, Rising sign, all planets, houses and a chart wheel. Private, runs in your browser.",
 };

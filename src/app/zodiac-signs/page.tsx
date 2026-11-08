@@ -9,7 +9,7 @@ import { SITE_URL } from "@/lib/site";
 import { MONTHS } from "@/lib/zodiac-calendar";
 
 export const metadata: Metadata = {
-  title: "Zodiac Signs & Dates: Complete Chart of All 12 Signs | AuraPulse",
+  title: "Zodiac Signs & Dates: Complete Chart of All 12 Signs | Horoscopes and Charts",
   description:
     "Zodiac signs and dates for all 12 astrology signs: Aries to Pisces date ranges, symbols, elements, modalities and ruling planets, plus a free tool to find your star sign.",
 };
@@ -43,8 +43,8 @@ export default function ZodiacSignsPage() {
       {
         "@type": "Article",
         headline: "Zodiac Signs & Dates: Complete Chart of All 12 Signs",
-        author: { "@type": "Organization", name: "AuraPulse Editorial Team" },
-        publisher: { "@type": "Organization", name: "AuraPulse" },
+        author: { "@type": "Organization", name: "Horoscopes and Charts Editorial Team" },
+        publisher: { "@type": "Organization", name: "Horoscopes and Charts" },
         mainEntityOfPage: `${SITE_URL}/zodiac-signs`,
       },
       {

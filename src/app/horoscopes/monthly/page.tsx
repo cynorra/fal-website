@@ -12,7 +12,7 @@ const monthLabel = (d: Date) => new Intl.DateTimeFormat("en-US", { timeZone: "UT
 
 export function generateMetadata(): Metadata {
   const label = monthLabel(new Date());
-  const title = `Monthly Horoscope for ${label}: All 12 Signs | AuraPulse`;
+  const title = `Monthly Horoscope for ${label}: All 12 Signs | Horoscopes and Charts`;
   const description = `Monthly horoscope for ${label}: new and full Moon dates, when the Sun changes sign, and what each zodiac sign should focus on. Calculated from real planetary positions.`;
   return { title, description, openGraph: { title, description, type: "article" } };
 }

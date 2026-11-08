@@ -2,8 +2,8 @@ import React from "react";
 import { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Editorial Standards & Esoteric Research | AuraPulse",
-  description: "AuraPulse editorial guidelines, fact-checking principles, and archetypal sourcing standards.",
+  title: "Editorial Standards & Esoteric Research | Horoscopes and Charts",
+  description: "Horoscopes and Charts editorial guidelines, fact-checking principles, and archetypal sourcing standards.",
 };
 
 export default function EditorialStandardsPage() {
@@ -35,7 +35,7 @@ export default function EditorialStandardsPage() {
       <section className="space-y-3">
         <h2 className="text-xl font-serif font-bold text-white">3. Original Content & Quality Control</h2>
         <p>
-          We do not publish auto-generated thin content. Every guide is written and reviewed by the AuraPulse editorial team, checked against published psychological and mythological sources, and updated when we find errors.
+          We do not publish auto-generated thin content. Every guide is written and reviewed by the Horoscopes and Charts editorial team, checked against published psychological and mythological sources, and updated when we find errors.
         </p>
       </section>
     </article>

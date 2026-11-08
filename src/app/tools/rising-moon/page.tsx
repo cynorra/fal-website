@@ -6,7 +6,7 @@ import { BirthChartCalculator } from "@/components/interactive/BirthChartCalcula
 import { AdBanner } from "@/components/ui/AdBanner";
 
 export const metadata: Metadata = {
-  title: "Rising Sign Calculator: Find Your Ascendant, Moon & Sun Sign | AuraPulse",
+  title: "Rising Sign Calculator: Find Your Ascendant, Moon & Sun Sign | Horoscopes and Charts",
   description:
     "Free rising sign calculator. Enter your birth date, time and city to find your Rising sign (Ascendant), Moon sign and Sun sign, calculated from real planetary positions.",
 };

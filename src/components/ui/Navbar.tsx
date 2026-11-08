@@ -30,7 +30,7 @@ export function Navbar() {
           </div>
           <div className="flex flex-col">
             <span className="font-serif text-lg font-bold tracking-wider text-white">
-              Aura<span className="gold-gradient-text font-serif">Pulse</span>
+              Horoscopes<span className="gold-gradient-text font-serif"> &amp; Charts</span>
             </span>
             <span className="text-[9px] uppercase tracking-widest text-purple-300/60 -mt-1 font-mono">
               Cosmic Wisdom

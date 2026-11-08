@@ -11,7 +11,7 @@ export default function ContactPage() {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    const subject = encodeURIComponent(`[AuraPulse] ${formData.subject || "General Question"}`);
+    const subject = encodeURIComponent(`[Horoscopes and Charts] ${formData.subject || "General Question"}`);
     const body = encodeURIComponent(`${formData.message}
 
 — ${formData.name} (${formData.email})`);
@@ -27,7 +27,7 @@ export default function ContactPage() {
           <span>Direct Connection</span>
         </div>
         <h1 className="text-3xl sm:text-5xl font-serif font-black text-white">
-          Contact AuraPulse
+          Contact Horoscopes and Charts
         </h1>
         <p className="text-sm text-white/60">
           We welcome reader questions, editorial corrections, partnership inquiries, and shared spiritual experiences.

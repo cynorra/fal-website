@@ -280,7 +280,7 @@ export default function HomePage() {
               Trending Dream Interpretations
             </h2>
             <p className="text-xs sm:text-sm text-white/60 mt-1">
-              In-depth psychological and spiritual decoders written by the AuraPulse editorial team.
+              In-depth psychological and spiritual decoders written by the Horoscopes and Charts editorial team.
             </p>
           </div>
           <Link
@@ -399,7 +399,7 @@ export default function HomePage() {
           Our Editorial Integrity & Research Standards
         </h3>
         <p className="text-xs sm:text-sm text-white/70 max-w-2xl mx-auto leading-relaxed font-light">
-          Every dream analysis, numerological frequency, and astrological synastry chart on AuraPulse is thoroughly researched, citing classical Carl Jung psychology, archetypal mythology, and astronomical ephemeris standards. We reject generic auto-generated spam in favor of deep, contemplative literature.
+          Every dream analysis, numerological frequency, and astrological synastry chart on Horoscopes and Charts is thoroughly researched, citing classical Carl Jung psychology, archetypal mythology, and astronomical ephemeris standards. We reject generic auto-generated spam in favor of deep, contemplative literature.
         </p>
         <div className="pt-2 flex flex-wrap items-center justify-center gap-4 text-xs text-amber-300">
           <Link href="/about" className="hover:underline">

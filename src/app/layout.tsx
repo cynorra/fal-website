@@ -9,10 +9,15 @@ export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
   applicationName: SITE_NAME,
   alternates: { canonical: "./" },
-  title: "AuraPulse | Dream Dictionary, Angel Numbers & Moon Phase Soulmate",
+  title: "Horoscopes and Charts: Zodiac Signs, Birth Chart Calculator & Daily Horoscope",
   description:
-    "Free esoteric guidance portal: Jungian dream dictionary (snakes, teeth, pregnancy, ex), angel numbers (111, 222, 444, 555, 888), moon phase compatibility, daily tarot, and rising sign calculator.",
+    "Free horoscopes and birth chart tools: zodiac signs and dates, daily, weekly and monthly horoscopes, compatibility, Chinese zodiac, life path numbers, plus a dream dictionary and angel number guides.",
   keywords: [
+    "horoscope",
+    "daily horoscope",
+    "birth chart calculator",
+    "zodiac signs and dates",
+    "astrology chart",
     "dream dictionary",
     "dream about snakes meaning",
     "teeth falling out in dream",
@@ -34,11 +39,11 @@ export const metadata: Metadata = {
     "spiritual omens",
     "itching palms meaning",
   ],
-  authors: [{ name: "AuraPulse Spiritual Editorial" }],
+  authors: [{ name: "Horoscopes and Charts Spiritual Editorial" }],
   openGraph: {
-    title: "AuraPulse | Dream Dictionary, Angel Numbers & Cosmic Synastry",
+    title: "Horoscopes and Charts: Zodiac Signs, Birth Chart & Daily Horoscope",
     description:
-      "Decode nocturnal dreams, understand repetitive angel number synchronicities, and test your moon phase soulmate compatibility.",
+      "Zodiac signs and dates, free birth chart calculator, daily horoscope, compatibility, Chinese zodiac and more.",
     url: SITE_URL,
     siteName: SITE_NAME,
     type: "website",
@@ -46,9 +51,9 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "AuraPulse | Dream Dictionary, Angel Numbers & Cosmic Synastry",
+    title: "Horoscopes and Charts: Zodiac Signs, Birth Chart & Daily Horoscope",
     description:
-      "Decode dreams, angel numbers and moon phase compatibility with free interactive tools.",
+      "Free birth chart calculator, horoscopes, zodiac signs and compatibility.",
   },
   robots: {
     index: true,

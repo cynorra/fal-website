@@ -1,4 +1,4 @@
-# 🌌 AuraPulse — Esoteric Wisdom, Dream Dictionary & Celestial Guidance Portal
+# 🌌 Horoscopes and Charts — Esoteric Wisdom, Dream Dictionary & Celestial Guidance Portal
 
 A high-performance modern web application bridging Carl Jung's analytical shadow psychology with classical astrology, angel numerology, and interactive viral synastry tools. Built with Next.js 14 (App Router), TypeScript, Tailwind CSS, Framer Motion, and Lucide Icons. Designed following Watermelon UI, Magic UI, and Aceternity UI design systems.
 

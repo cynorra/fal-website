@@ -32,10 +32,10 @@ export function generateStaticParams() {
 
 export function generateMetadata({ params }: Props): Metadata {
   const entry = DREAM_ENTRIES.find((d) => d.slug === params.slug);
-  if (!entry) return { title: "Dream Meaning Not Found | AuraPulse" };
+  if (!entry) return { title: "Dream Meaning Not Found | Horoscopes and Charts" };
 
   return {
-    title: `${DREAM_SEO_TITLES[entry.slug] ?? entry.title} | AuraPulse`,
+    title: `${DREAM_SEO_TITLES[entry.slug] ?? entry.title} | Horoscopes and Charts`,
     description: entry.quickAnswer,
     openGraph: {
       title: entry.title,
@@ -63,11 +63,11 @@ export default function DreamDetailPage({ params }: Props) {
         description: entry.quickAnswer,
         author: {
           "@type": "Organization",
-          name: "AuraPulse Editorial Team",
+          name: "Horoscopes and Charts Editorial Team",
         },
         publisher: {
           "@type": "Organization",
-          name: "AuraPulse",
+          name: "Horoscopes and Charts",
           logo: {
             "@type": "ImageObject",
             url: `${SITE_URL}/icon.svg`,

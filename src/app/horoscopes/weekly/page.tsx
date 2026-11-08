@@ -11,7 +11,7 @@ export const revalidate = 3600;
 export function generateMetadata(): Metadata {
   const days = weekDays(new Date());
   const range = `${fmtDay(days[0].date, false)} - ${fmtDay(days[6].date, false)}`;
-  const title = `Weekly Horoscope for All Signs (${range}) | AuraPulse`;
+  const title = `Weekly Horoscope for All Signs (${range}) | Horoscopes and Charts`;
   const description = `Weekly horoscope for ${range}: the Moon's sign and phase each day, and which area of life it lights up for every zodiac sign. Calculated from real planetary positions.`;
   return { title, description, openGraph: { title, description, type: "article" } };
 }

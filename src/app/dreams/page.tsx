@@ -77,7 +77,7 @@ export default function DreamsHubPage() {
           In analytical psychology, Swiss psychiatrist Carl Gustav Jung posited that dreams are not arbitrary synaptic firings; they are unvarnished expressions of the unconscious mind. Unlike Sigmund Freud, who viewed dreams primarily as repressed wish fulfillment, Jung understood the dream world as a compensatory system designed to restore psychic equilibrium.
         </p>
         <p className="text-sm">
-          When analyzing a dream on AuraPulse, ask yourself three essential questions: What emotion did I feel upon awakening? What current waking-life situation mirrors the emotional climate of the dream? And what shadow aspect of myself might the central archetype represent?
+          When analyzing a dream on Horoscopes and Charts, ask yourself three essential questions: What emotion did I feel upon awakening? What current waking-life situation mirrors the emotional climate of the dream? And what shadow aspect of myself might the central archetype represent?
         </p>
       </div>
 

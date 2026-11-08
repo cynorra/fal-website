@@ -29,10 +29,10 @@ function info(y: number) {
 
 export function generateMetadata({ params }: Props): Metadata {
   const y = Number(params.year);
-  if (!(y >= FIRST && y <= LAST)) return { title: "Chinese Zodiac Not Found | AuraPulse", robots: { index: false } };
+  if (!(y >= FIRST && y <= LAST)) return { title: "Chinese Zodiac Not Found | Horoscopes and Charts", robots: { index: false } };
   const { z } = info(y);
   return {
-    title: `${y} Chinese Zodiac: ${z.element} ${z.animal} | AuraPulse`,
+    title: `${y} Chinese Zodiac: ${z.element} ${z.animal} | Horoscopes and Charts`,
     description: `${y} Chinese zodiac sign: ${z.polarity} ${z.element} ${z.animal}. Chinese New Year date, exact zodiac year range, personality, element meaning and compatibility.`,
   };
 }

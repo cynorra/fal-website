@@ -18,9 +18,9 @@ export function generateStaticParams() {
 
 export function generateMetadata({ params }: Props): Metadata {
   const a = ANIMAL_PROFILES.find((x) => x.slug === params.animal);
-  if (!a) return { title: "Chinese Zodiac Not Found | AuraPulse", robots: { index: false } };
+  if (!a) return { title: "Chinese Zodiac Not Found | Horoscopes and Charts", robots: { index: false } };
   return {
-    title: `Year of the ${a.animal}: Personality, Years & Compatibility | AuraPulse`,
+    title: `Year of the ${a.animal}: Personality, Years & Compatibility | Horoscopes and Charts`,
     description: `Chinese zodiac ${a.animal}: personality, strengths, weaknesses, love, career, lucky numbers and colors, compatibility and every ${a.animal} year. ${a.tagline}`,
   };
 }
@@ -42,8 +42,8 @@ export default function AnimalPage({ params }: Props) {
       {
         "@type": "Article",
         headline: `Year of the ${a.animal}: Chinese Zodiac Personality & Compatibility`,
-        author: { "@type": "Organization", name: "AuraPulse Editorial Team" },
-        publisher: { "@type": "Organization", name: "AuraPulse" },
+        author: { "@type": "Organization", name: "Horoscopes and Charts Editorial Team" },
+        publisher: { "@type": "Organization", name: "Horoscopes and Charts" },
         mainEntityOfPage: `${SITE_URL}/chinese-zodiac/${a.slug}`,
       },
       {

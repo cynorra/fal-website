@@ -7,7 +7,7 @@ import { LIFE_PATH_ENTRIES } from "@/lib/life-path-data";
 import { AdBanner } from "@/components/ui/AdBanner";
 
 export const metadata: Metadata = {
-  title: "Life Path Number Calculator (Free) | AuraPulse",
+  title: "Life Path Number Calculator (Free) | Horoscopes and Charts",
   description:
     "Calculate your Life Path Number from your birth date. See the step-by-step Pythagorean method, master numbers 11, 22 and 33, and read what each life path means.",
 };

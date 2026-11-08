@@ -33,10 +33,10 @@ export function generateStaticParams() {
 
 export function generateMetadata({ params }: Props): Metadata {
   const entry = SYMBOL_ENTRIES.find((s) => s.slug === params.slug);
-  if (!entry) return { title: "Symbol Meaning Not Found | AuraPulse" };
+  if (!entry) return { title: "Symbol Meaning Not Found | Horoscopes and Charts" };
 
   return {
-    title: `${SYMBOL_SEO_TITLES[entry.slug] ?? entry.title} | AuraPulse`,
+    title: `${SYMBOL_SEO_TITLES[entry.slug] ?? entry.title} | Horoscopes and Charts`,
     description: entry.tagline,
     openGraph: {
       title: entry.title,
@@ -63,11 +63,11 @@ export default function SymbolDetailPage({ params }: Props) {
         description: entry.tagline,
         author: {
           "@type": "Organization",
-          name: "AuraPulse Editorial Team",
+          name: "Horoscopes and Charts Editorial Team",
         },
         publisher: {
           "@type": "Organization",
-          name: "AuraPulse",
+          name: "Horoscopes and Charts",
         },
         mainEntityOfPage: {
           "@type": "WebPage",

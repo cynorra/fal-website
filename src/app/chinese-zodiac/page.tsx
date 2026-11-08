@@ -7,7 +7,7 @@ import { chineseZodiac } from "@/lib/chinese-calendar";
 import { AdBanner } from "@/components/ui/AdBanner";
 
 export const metadata: Metadata = {
-  title: "Chinese Zodiac Calculator: Find Your Animal & Element | AuraPulse",
+  title: "Chinese Zodiac Calculator: Find Your Animal & Element | Horoscopes and Charts",
   description:
     "Free Chinese zodiac calculator. Enter your birth date to find your animal sign and element, with correct Chinese New Year dates, a year chart for 1948 to 2031 and all 12 animal guides.",
 };

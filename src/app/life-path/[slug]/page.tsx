@@ -18,9 +18,9 @@ export function generateStaticParams() {
 
 export function generateMetadata({ params }: Props): Metadata {
   const e = LIFE_PATH_ENTRIES.find((x) => x.slug === params.slug);
-  if (!e) return { title: "Life Path Not Found | AuraPulse", robots: { index: false } };
+  if (!e) return { title: "Life Path Not Found | Horoscopes and Charts", robots: { index: false } };
   return {
-    title: `Life Path Number ${e.number} Meaning: ${e.archetype} | AuraPulse`,
+    title: `Life Path Number ${e.number} Meaning: ${e.archetype} | Horoscopes and Charts`,
     description: `Life Path ${e.number} (${e.archetype}) meaning: strengths, challenges, love, career, money and compatibility. ${e.tagline}`,
     openGraph: { title: `Life Path Number ${e.number} Meaning`, type: "article" },
   };
@@ -46,8 +46,8 @@ export default function LifePathDetail({ params }: Props) {
         "@type": "Article",
         headline: `Life Path Number ${e.number} Meaning: ${e.archetype}`,
         description: e.tagline,
-        author: { "@type": "Organization", name: "AuraPulse Editorial Team" },
-        publisher: { "@type": "Organization", name: "AuraPulse" },
+        author: { "@type": "Organization", name: "Horoscopes and Charts Editorial Team" },
+        publisher: { "@type": "Organization", name: "Horoscopes and Charts" },
         mainEntityOfPage: `${SITE_URL}/life-path/${e.slug}`,
       },
       {

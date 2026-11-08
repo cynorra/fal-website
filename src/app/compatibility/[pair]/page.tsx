@@ -44,14 +44,14 @@ export function generateStaticParams() {
 
 export function generateMetadata({ params }: Props): Metadata {
   const parts = parsePair(params.pair);
-  if (!parts) return { title: "Compatibility Not Found | AuraPulse", robots: { index: false } };
+  if (!parts) return { title: "Compatibility Not Found | Horoscopes and Charts", robots: { index: false } };
   const canonicalSlug = [...parts].sort((x, y) => SIGN_IDS.indexOf(x) - SIGN_IDS.indexOf(y)).join("-and-");
 
   const nameA = parts[0].charAt(0).toUpperCase() + parts[0].slice(1);
   const nameB = parts[1].charAt(0).toUpperCase() + parts[1].slice(1);
 
   return {
-    title: `${nameA} and ${nameB} Compatibility: Love, Chemistry & Match | AuraPulse`,
+    title: `${nameA} and ${nameB} Compatibility: Love, Chemistry & Match | Horoscopes and Charts`,
     description: `Complete relationship analysis for ${nameA} and ${nameB}. Explore elemental alchemy, bedroom chemistry, communication traps, and long-term marriage potential.`,
     alternates: { canonical: `/compatibility/${canonicalSlug}` },
     // Pair pages without a full hand-written report are kept for users but not indexed yet

@@ -20,9 +20,9 @@ const byId = Object.fromEntries(ZODIAC_SIGNS.map((s) => [s.id, s]));
 
 export function generateMetadata({ params }: Props): Metadata {
   const e = ELEMENT_BY_SLUG[params.element];
-  if (!e) return { title: "Element Not Found | AuraPulse", robots: { index: false } };
+  if (!e) return { title: "Element Not Found | Horoscopes and Charts", robots: { index: false } };
   const names = SIGN_IDS_BY_ELEMENT[e.slug].map((id) => byId[id].name);
-  const title = `${e.name} Signs in Astrology: ${names.join(", ")} | AuraPulse`;
+  const title = `${e.name} Signs in Astrology: ${names.join(", ")} | Horoscopes and Charts`;
   const description = `${e.name} zodiac signs (${names.join(", ")}): personality traits, strengths, challenges, love, career and compatibility with the other elements.`;
   return { title, description, openGraph: { title, description, type: "article" } };
 }
@@ -39,8 +39,8 @@ export default function ElementPage({ params }: Props) {
       {
         "@type": "Article",
         headline: `${e.name} Signs in Astrology`,
-        author: { "@type": "Organization", name: "AuraPulse Editorial Team" },
-        publisher: { "@type": "Organization", name: "AuraPulse" },
+        author: { "@type": "Organization", name: "Horoscopes and Charts Editorial Team" },
+        publisher: { "@type": "Organization", name: "Horoscopes and Charts" },
         mainEntityOfPage: `${SITE_URL}/zodiac-signs/element/${e.slug}`,
       },
       {

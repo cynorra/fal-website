@@ -2,8 +2,8 @@ import React from "react";
 import { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Terms of Service | AuraPulse",
-  description: "Terms and conditions of using AuraPulse esoteric calculators and content archives.",
+  title: "Terms of Service | Horoscopes and Charts",
+  description: "Terms and conditions of using Horoscopes and Charts esoteric calculators and content archives.",
 };
 
 export default function TermsPage() {
@@ -21,21 +21,21 @@ export default function TermsPage() {
       <section className="space-y-3">
         <h2 className="text-xl font-serif font-bold text-white">1. Acceptance of Terms</h2>
         <p>
-          By accessing and utilizing the AuraPulse portal, you agree to comply with and be bound by these Terms of Service, all applicable laws and regulations, and agree that you are responsible for compliance with any applicable local laws.
+          By accessing and utilizing the Horoscopes and Charts portal, you agree to comply with and be bound by these Terms of Service, all applicable laws and regulations, and agree that you are responsible for compliance with any applicable local laws.
         </p>
       </section>
 
       <section className="space-y-3">
         <h2 className="text-xl font-serif font-bold text-white">2. Contemplative & Entertainment Use</h2>
         <p>
-          All content, including dream interpretations, angel number readings, tarot cards, astrological horoscopes, and synastry calculators, is intended solely for personal reflection, spiritual contemplation, and entertainment purposes. AuraPulse does not provide licensed medical, legal, or financial counseling.
+          All content, including dream interpretations, angel number readings, tarot cards, astrological horoscopes, and synastry calculators, is intended solely for personal reflection, spiritual contemplation, and entertainment purposes. Horoscopes and Charts does not provide licensed medical, legal, or financial counseling.
         </p>
       </section>
 
       <section className="space-y-3">
         <h2 className="text-xl font-serif font-bold text-white">3. Intellectual Property</h2>
         <p>
-          All custom texts, calculators, algorithmic interpretations, and brand marks on AuraPulse are the exclusive property of the AuraPulse Network and protected under international copyright treaties.
+          All custom texts, calculators, algorithmic interpretations, and brand marks on Horoscopes and Charts are the exclusive property of the Horoscopes and Charts Network and protected under international copyright treaties.
         </p>
       </section>
 
@@ -52,7 +52,7 @@ export default function TermsPage() {
       <section className="space-y-3">
         <h2 className="text-xl font-serif font-bold text-white">5. Limitation of Liability</h2>
         <p>
-          To the fullest extent permitted by law, AuraPulse is not liable for any damages arising from your use of, or inability to
+          To the fullest extent permitted by law, Horoscopes and Charts is not liable for any damages arising from your use of, or inability to
           use, the site or from decisions made based on its content.
         </p>
       </section>

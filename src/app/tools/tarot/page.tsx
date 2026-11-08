@@ -37,7 +37,7 @@ export default function TarotPage() {
           How to Read Tarot as a Subconscious Mirror
         </h3>
         <p>
-          Tarot is not about fatalistic fortune telling; it is a profound archetypal system of self-reflection. When you draw a card on AuraPulse, your intuitive subconscious selects a pictorial symbol that mirrors the energetic currents operating below your everyday awareness.
+          Tarot is not about fatalistic fortune telling; it is a profound archetypal system of self-reflection. When you draw a card on Horoscopes and Charts, your intuitive subconscious selects a pictorial symbol that mirrors the energetic currents operating below your everyday awareness.
         </p>
         <p>
           Use your daily card as a contemplative anchor: whenever you face a difficult decision during your day, recall the wisdom of the archetype you revealed this morning.

@@ -5,9 +5,9 @@ import { AdBanner } from "@/components/ui/AdBanner";
 import { CONTACT_EMAIL } from "@/lib/site";
 
 export const metadata: Metadata = {
-  title: "About Us | AuraPulse Cosmic Sanctuary",
+  title: "About Us | Horoscopes and Charts Cosmic Sanctuary",
   description:
-    "Learn about AuraPulse, our editorial standards, our research philosophy bridging Jungian psychology with esoteric sciences, and our global mission.",
+    "Learn about Horoscopes and Charts, our editorial standards, our research philosophy bridging Jungian psychology with esoteric sciences, and our global mission.",
 };
 
 export default function AboutPage() {
@@ -19,7 +19,7 @@ export default function AboutPage() {
           <span>Our Vision & Origins</span>
         </div>
         <h1 className="text-3xl sm:text-5xl font-serif font-black text-white">
-          About AuraPulse
+          About Horoscopes and Charts
         </h1>
         <p className="text-sm sm:text-base text-white/60 max-w-xl mx-auto">
           Illuminating the subtle architecture of the soul through timeless archetypes, classical psychology, and modern contemplative interfaces.
@@ -33,7 +33,7 @@ export default function AboutPage() {
           Our Guiding Philosophy
         </h2>
         <p className="text-sm sm:text-base">
-          AuraPulse was founded with a singular conviction: that humanity&apos;s ancient hunger for meaning should not be met with shallow clickbait or commercial superstition. We believe the dream world, numerical synchronicities, and planetary transits are sacred psychological mirrors.
+          Horoscopes and Charts was founded with a singular conviction: that humanity&apos;s ancient hunger for meaning should not be met with shallow clickbait or commercial superstition. We believe the dream world, numerical synchronicities, and planetary transits are sacred psychological mirrors.
         </p>
         <p className="text-sm sm:text-base">
           By combining Carl Jung&apos;s depth psychology with classical astrological principles, we create a sanctuary where curious seekers can decode their nocturnal messages and align with their highest life path.
