@@ -1,3 +1,4 @@
+import { fromContent } from "./content";
 export interface LifePathDeep {
   example: [number, number, number]; // month, day, year
   friends: string;
@@ -6,7 +7,7 @@ export interface LifePathDeep {
   dayToDay: string;
 }
 
-export const LIFE_PATH_DEEP: Record<number, LifePathDeep> = {
+const LIFE_PATH_DEEP_DEFAULT: Record<number, LifePathDeep> = {
   1: {
     example: [1, 14, 1984],
     friends: "A Life Path 1 friend is the one who suggests the trip and books the table. They are loyal but expect directness, and they may need reminding to ask how you are before they explain their own plan. They keep a small circle of people who are honest with them.",
@@ -92,3 +93,4 @@ export const LIFE_PATH_DEEP: Record<number, LifePathDeep> = {
     dayToDay: "Pick one act of service a day and one act of self-care. Pairing them keeps giving sustainable.",
   },
 };
+export const LIFE_PATH_DEEP: Record<number, LifePathDeep> = fromContent("life_path_deep", LIFE_PATH_DEEP_DEFAULT);

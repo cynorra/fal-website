@@ -1,4 +1,5 @@
 import { aspectBetween } from "./aspects";
+import { fromContent } from "./content";
 
 export interface CompatibilityReport {
   signA: string;
@@ -35,7 +36,7 @@ const ELEMENT_MAP: Record<string, "Fire" | "Earth" | "Air" | "Water"> = {
 };
 
 // Curated comprehensive synastry dossiers for high-traffic pairings
-const CURATED_REPORTS: Record<string, Partial<CompatibilityReport>> = {
+const CURATED_REPORTS_DEFAULT: Record<string, Partial<CompatibilityReport>> = {
   "aries-and-scorpio": {
     overallScore: 84,
     loveScore: 82,
@@ -205,6 +206,7 @@ const CURATED_REPORTS: Record<string, Partial<CompatibilityReport>> = {
       "Sagittarius must deliver honesty with diplomatic warmth. Leo must understand that Sagittarius' love of solitude is not personal rejection.",
   },
 };
+export const CURATED_REPORTS: Record<string, Partial<CompatibilityReport>> = fromContent("compat_curated", CURATED_REPORTS_DEFAULT);
 
 export const CURATED_PAIRS: string[] = Object.keys(CURATED_REPORTS);
 

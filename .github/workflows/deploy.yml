@@ -19,6 +19,8 @@ jobs:
       contents: read
     env:
       NEXT_PUBLIC_SITE_URL: https://horoscopesandcharts.com
+      # Read-only: the build pulls published content from Firestore. The service account is never used here.
+      FIREBASE_PROJECT_ID: ${{ vars.FIREBASE_PROJECT_ID }}
       NEXT_PUBLIC_CONTACT_EMAIL: ${{ vars.NEXT_PUBLIC_CONTACT_EMAIL }}
       NEXT_PUBLIC_ADSENSE_CLIENT_ID: ${{ vars.NEXT_PUBLIC_ADSENSE_CLIENT_ID }}
       NEXT_PUBLIC_ADSENSE_SLOT_ID: ${{ vars.NEXT_PUBLIC_ADSENSE_SLOT_ID }}

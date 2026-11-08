@@ -1,0 +1,12 @@
+rules_version = '2';
+// Horoscopes and Charts: anyone (and the site build) can read published documents.
+// Nobody can write from a client; scripts/push-content.mjs writes with the Admin SDK,
+// which bypasses these rules.
+service cloud.firestore {
+  match /databases/{database}/documents {
+    match /{collection}/{doc} {
+      allow get, list: if resource.data.status == 'published';
+      allow write: if false;
+    }
+  }
+}

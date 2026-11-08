@@ -1,3 +1,4 @@
+import { fromContent } from "./content";
 // Low-precision astronomy helpers (accurate to well under a degree for the Sun, ~0.3 degrees for the Moon).
 // Good enough to decide which zodiac sign a body is in, and the Moon phase, on a given day.
 
@@ -67,7 +68,7 @@ export function moonPhase(date: Date): MoonPhaseInfo {
   return { name, illumination, waxing };
 }
 
-export const HOUSE_THEMES: { name: string; theme: string; advice: string }[] = [
+const HOUSE_THEMES_DEFAULT: { name: string; theme: string; advice: string }[] = [
   { name: "1st house", theme: "self, body and first impressions", advice: "Your mood and energy are in the spotlight. It is a good day to start something personal or to pay attention to how you present yourself." },
   { name: "2nd house", theme: "money, possessions and self-worth", advice: "Attention turns to resources and values. Review a budget, handle a purchase carefully and notice what you truly value." },
   { name: "3rd house", theme: "communication, siblings and short trips", advice: "Conversations, messages and errands are favored. Reach out to someone, write, or learn something small but useful." },
@@ -81,8 +82,9 @@ export const HOUSE_THEMES: { name: string; theme: string; advice: string }[] = [
   { name: "11th house", theme: "friends, groups and future hopes", advice: "Community is highlighted. Connect with friends, join a conversation or work on a long-term wish with others." },
   { name: "12th house", theme: "rest, solitude and the subconscious", advice: "A quiet, reflective day. Rest, journal and give yourself space; avoid forcing decisions while you recharge." },
 ];
+export const HOUSE_THEMES: { name: string; theme: string; advice: string }[] = fromContent("house_themes", HOUSE_THEMES_DEFAULT);
 
-export const PHASE_ADVICE: Record<string, string> = {
+const PHASE_ADVICE_DEFAULT: Record<string, string> = {
   "New Moon": "A time for quiet reset and setting intentions rather than forcing results.",
   "Waxing Crescent": "Momentum is building. Take the first small step on what you set out to do.",
   "First Quarter": "Tension between plan and reality often appears. Make a decision and adjust.",
@@ -92,6 +94,7 @@ export const PHASE_ADVICE: Record<string, string> = {
   "Last Quarter": "Let go of what no longer works and simplify.",
   "Waning Crescent": "Rest and recover before the next cycle begins.",
 };
+export const PHASE_ADVICE: Record<string, string> = fromContent("phase_advice", PHASE_ADVICE_DEFAULT);
 
 export interface DailyTransit {
   moonSign: string;

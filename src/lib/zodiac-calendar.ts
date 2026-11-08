@@ -1,4 +1,5 @@
 import { ZODIAC_SIGNS } from "./horoscopes-data";
+import { fromContent } from "./content";
 
 export interface MonthEntry {
   slug: string;
@@ -8,7 +9,7 @@ export interface MonthEntry {
   segments: [string, number, number][];
 }
 
-export const MONTHS: MonthEntry[] = [
+const MONTHS_DEFAULT: MonthEntry[] = [
   { slug: "january", name: "January", days: 31, segments: [["capricorn", 1, 19], ["aquarius", 20, 31]] },
   { slug: "february", name: "February", days: 29, segments: [["aquarius", 1, 18], ["pisces", 19, 29]] },
   { slug: "march", name: "March", days: 31, segments: [["pisces", 1, 20], ["aries", 21, 31]] },
@@ -22,6 +23,7 @@ export const MONTHS: MonthEntry[] = [
   { slug: "november", name: "November", days: 30, segments: [["scorpio", 1, 21], ["sagittarius", 22, 30]] },
   { slug: "december", name: "December", days: 31, segments: [["sagittarius", 1, 21], ["capricorn", 22, 31]] },
 ];
+export const MONTHS: MonthEntry[] = fromContent("months", MONTHS_DEFAULT);
 
 export const MONTH_BY_SLUG: Record<string, MonthEntry> = Object.fromEntries(MONTHS.map((m) => [m.slug, m]));
 
@@ -47,7 +49,7 @@ export interface ElementEntry {
   faq: { question: string; answer: string }[];
 }
 
-export const ELEMENTS: ElementEntry[] = [
+const ELEMENTS_DEFAULT: ElementEntry[] = [
   {
     slug: "fire",
     name: "Fire",
@@ -157,6 +159,7 @@ export const ELEMENTS: ElementEntry[] = [
     ],
   },
 ];
+export const ELEMENTS: ElementEntry[] = fromContent("elements", ELEMENTS_DEFAULT);
 
 export const ELEMENT_BY_SLUG: Record<string, ElementEntry> = Object.fromEntries(ELEMENTS.map((e) => [e.slug, e]));
 

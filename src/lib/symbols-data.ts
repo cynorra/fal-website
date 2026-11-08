@@ -354,5 +354,7 @@ const BASE_SYMBOLS: SymbolEntry[] = [
 ];
 
 import { EXTRA_SYMBOLS } from "./symbols-extra";
+import { fromContent } from "./content";
 
-export const SYMBOL_ENTRIES: SymbolEntry[] = [...BASE_SYMBOLS, ...EXTRA_SYMBOLS];
+const SYMBOL_ENTRIES_DEFAULT: SymbolEntry[] = [...BASE_SYMBOLS, ...EXTRA_SYMBOLS];
+export const SYMBOL_ENTRIES: SymbolEntry[] = fromContent("symbols", SYMBOL_ENTRIES_DEFAULT);

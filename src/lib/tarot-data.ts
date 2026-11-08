@@ -1,3 +1,4 @@
+import { fromContent } from "./content";
 export interface TarotCard {
   id: string;
   name: string;
@@ -13,7 +14,7 @@ export interface TarotCard {
   colorGradient: string;
 }
 
-export const TAROT_DECK: TarotCard[] = [
+const TAROT_DECK_DEFAULT: TarotCard[] = [
   {
     id: "the-fool",
     name: "The Fool",
@@ -141,4 +142,5 @@ export const TAROT_DECK: TarotCard[] = [
     colorGradient: "from-yellow-400/20 via-amber-500/10 to-transparent",
   },
 ];
+export const TAROT_DECK: TarotCard[] = fromContent("tarot", TAROT_DECK_DEFAULT);
 

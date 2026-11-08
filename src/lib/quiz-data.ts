@@ -1,3 +1,4 @@
+import { fromContent } from "./content";
 export interface QuizQuestion {
   id: number;
   question: string;
@@ -20,7 +21,7 @@ export interface AuraResult {
   sacredChakra: string;
 }
 
-export const AURA_QUESTIONS: QuizQuestion[] = [
+const AURA_QUESTIONS_DEFAULT: QuizQuestion[] = [
   {
     id: 1,
     question: "When entering a crowded room, what is your immediate instinctive reaction?",
@@ -176,8 +177,9 @@ export const AURA_QUESTIONS: QuizQuestion[] = [
     ],
   },
 ];
+export const AURA_QUESTIONS: QuizQuestion[] = fromContent("quiz_questions", AURA_QUESTIONS_DEFAULT);
 
-export const AURA_RESULTS: Record<string, AuraResult> = {
+const AURA_RESULTS_DEFAULT: Record<string, AuraResult> = {
   indigo: {
     id: "indigo",
     name: "Royal Indigo",
@@ -251,4 +253,5 @@ export const AURA_RESULTS: Record<string, AuraResult> = {
     sacredChakra: "Soul Star Chakra",
   },
 };
+export const AURA_RESULTS: Record<string, AuraResult> = fromContent("quiz_results", AURA_RESULTS_DEFAULT);
 

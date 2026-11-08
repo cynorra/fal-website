@@ -1,3 +1,4 @@
+import { fromContent } from "./content";
 export interface AspectInfo {
   name: string;
   distance: number;
@@ -6,7 +7,7 @@ export interface AspectInfo {
   adjust: { overall: number; love: number; comm: number; chem: number };
 }
 
-const ASPECTS: AspectInfo[] = [
+const ASPECTS_DEFAULT: AspectInfo[] = [
   {
     name: "Conjunction (same sign)",
     distance: 0,
@@ -57,6 +58,7 @@ const ASPECTS: AspectInfo[] = [
     adjust: { overall: -4, love: -2, comm: -8, chem: 7 },
   },
 ];
+export const ASPECTS: AspectInfo[] = fromContent("aspects", ASPECTS_DEFAULT);
 
 export function aspectBetween(indexA: number, indexB: number): AspectInfo {
   const raw = Math.abs(indexA - indexB);

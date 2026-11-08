@@ -667,5 +667,7 @@ const BASE_DREAMS: DreamEntry[] = [
 ];
 
 import { EXTRA_DREAMS } from "./dreams-extra";
+import { fromContent } from "./content";
 
-export const DREAM_ENTRIES: DreamEntry[] = [...BASE_DREAMS, ...EXTRA_DREAMS];
+const DREAM_ENTRIES_DEFAULT: DreamEntry[] = [...BASE_DREAMS, ...EXTRA_DREAMS];
+export const DREAM_ENTRIES: DreamEntry[] = fromContent("dreams", DREAM_ENTRIES_DEFAULT);

@@ -1,3 +1,4 @@
+import { fromContent } from "./content";
 export interface ZodiacProfile {
   id: string;
   rulerPlanet: string; // classical + modern ruler, short
@@ -19,7 +20,7 @@ export interface ZodiacProfile {
   faq: { question: string; answer: string }[];
 }
 
-export const ZODIAC_PROFILES: ZodiacProfile[] = [
+const ZODIAC_PROFILES_DEFAULT: ZodiacProfile[] = [
   {
     id: "aries",
     rulerPlanet: "Mars",
@@ -489,6 +490,7 @@ export const ZODIAC_PROFILES: ZodiacProfile[] = [
     ],
   },
 ];
+export const ZODIAC_PROFILES: ZodiacProfile[] = fromContent("zodiac_profiles", ZODIAC_PROFILES_DEFAULT);
 
 export const ZODIAC_PROFILE_BY_ID: Record<string, ZodiacProfile> = Object.fromEntries(
   ZODIAC_PROFILES.map((p) => [p.id, p])

@@ -1,3 +1,4 @@
+import { fromContent } from "./content";
 export interface LifePathFAQ {
   question: string;
   answer: string;
@@ -21,7 +22,7 @@ export interface LifePathEntry {
   faq: LifePathFAQ[];
 }
 
-export const LIFE_PATH_ENTRIES: LifePathEntry[] = [
+const LIFE_PATH_ENTRIES_DEFAULT: LifePathEntry[] = [
   {
     number: 1,
     slug: "life-path-number-1",
@@ -527,6 +528,7 @@ export const LIFE_PATH_ENTRIES: LifePathEntry[] = [
     ],
   },
 ];
+export const LIFE_PATH_ENTRIES: LifePathEntry[] = fromContent("life_paths", LIFE_PATH_ENTRIES_DEFAULT);
 
 export const LIFE_PATH_BY_NUMBER: Record<number, LifePathEntry> = Object.fromEntries(
   LIFE_PATH_ENTRIES.map((e) => [e.number, e])

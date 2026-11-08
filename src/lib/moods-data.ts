@@ -1,3 +1,4 @@
+import { fromContent } from "./content";
 export interface MoodState {
   id: string;
   name: string;
@@ -10,7 +11,7 @@ export interface MoodState {
   breathPacing: string;
 }
 
-export const MOOD_STATES: MoodState[] = [
+const MOOD_STATES_DEFAULT: MoodState[] = [
   {
     id: "anxious",
     name: "Anxious & Restless",
@@ -78,4 +79,5 @@ export const MOOD_STATES: MoodState[] = [
     breathPacing: "Rhythmic Ocean Breath (Ujjayi)",
   },
 ];
+export const MOOD_STATES: MoodState[] = fromContent("moods", MOOD_STATES_DEFAULT);
 

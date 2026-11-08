@@ -1,3 +1,4 @@
+import { fromContent } from "./content";
 export interface ZodiacFAQ {
   question: string;
   answer: string;
@@ -27,7 +28,7 @@ export interface ZodiacSign {
   faq: ZodiacFAQ[];
 }
 
-export const ZODIAC_SIGNS: ZodiacSign[] = [
+const ZODIAC_SIGNS_DEFAULT: ZodiacSign[] = [
   {
     id: "aries",
     name: "Aries",
@@ -365,3 +366,4 @@ export const ZODIAC_SIGNS: ZodiacSign[] = [
     ],
   },
 ];
+export const ZODIAC_SIGNS: ZodiacSign[] = fromContent("zodiac_signs", ZODIAC_SIGNS_DEFAULT);

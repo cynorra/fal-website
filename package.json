@@ -7,7 +7,14 @@
     "build": "node --max-old-space-size=4096 -r ./patch-exfat.cjs node_modules/next/dist/bin/next build",
     "build:cf": "next build",
     "start": "node -r ./patch-exfat.cjs node_modules/next/dist/bin/next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "sync": "node scripts/sync-content.mjs",
+    "predev": "node scripts/sync-content.mjs",
+    "prebuild": "node scripts/sync-content.mjs",
+    "prebuild:cf": "node scripts/sync-content.mjs",
+    "content:export": "tsx scripts/export-content.mjs",
+    "content:push": "node scripts/push-content.mjs",
+    "content:rules": "node scripts/deploy-rules.mjs"
   },
   "dependencies": {
     "canvas-confetti": "^1.9.3",
@@ -25,8 +32,10 @@
     "@types/react": "^18.3.11",
     "@types/react-dom": "^18.3.1",
     "autoprefixer": "^10.4.20",
+    "firebase-admin": "^14.5.0",
     "postcss": "^8.4.47",
     "tailwindcss": "^3.4.14",
+    "tsx": "^4.23.15",
     "typescript": "^5.6.3"
   }
 }

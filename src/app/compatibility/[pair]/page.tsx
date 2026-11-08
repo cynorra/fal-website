@@ -20,11 +20,7 @@ import {
 import { AdBanner } from "@/components/ui/AdBanner";
 import { ZODIAC_PROFILE_BY_ID } from "@/lib/zodiac-profiles";
 import { aspectBetween, modalityText } from "@/lib/aspects";
-import { PAIRS_1 } from "@/lib/compat-pairs-1";
-import { PAIRS_2 } from "@/lib/compat-pairs-2";
-import { PAIRS_3 } from "@/lib/compat-pairs-3";
-
-const PAIR_TEXT = { ...PAIRS_1, ...PAIRS_2, ...PAIRS_3 };
+import { PAIR_TEXT } from "@/lib/compat-pair-text";
 
 interface Props {
   params: { pair: string };

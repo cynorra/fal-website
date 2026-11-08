@@ -1,4 +1,5 @@
 import type { DeepDive } from "./symbols-deep";
+import { fromContent } from "./content";
 
 const WAKE: Record<string, string[]> = {
   tornado: ["Storm dreams that return every night often track a real source of pressure: a deadline, a family argument or financial worry. If yours repeat, note what you were doing in the hours before bed and whether the dream eases when the stress does.", "Seek help if the nightmares start before a bad day, cause dread of sleeping, or follow a real storm or disaster you lived through."],
@@ -16,7 +17,7 @@ const wake = (topic: string): { heading: string; body: string[] } => ({
   body: WAKE[topic] ?? [],
 });
 
-export const DREAM_DEEP_DIVES: Record<string, DeepDive> = {
+const DREAM_DEEP_DIVES_DEFAULT: Record<string, DeepDive> = {
   "tornado-dream-meaning": {
     sections: [
       {
@@ -247,3 +248,4 @@ export const DREAM_DEEP_DIVES: Record<string, DeepDive> = {
     ],
   },
 };
+export const DREAM_DEEP_DIVES: Record<string, DeepDive> = fromContent("dream_deep", DREAM_DEEP_DIVES_DEFAULT);

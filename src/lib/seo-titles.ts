@@ -1,5 +1,6 @@
+import { fromContent } from "./content";
 // Keyword-first SEO titles (<= ~60 chars incl. suffix). Based on US search-volume research (Nov 2026).
-export const DREAM_SEO_TITLES: Record<string, string> = {
+const DREAM_SEO_TITLES_DEFAULT: Record<string, string> = {
   "pregnancy-dream-meaning": "Pregnancy Dream Meaning: Spiritual & Psychological",
   "dream-about-your-ex": "Dreaming About Your Ex: What It Really Means",
   "dream-about-dying": "Dream About Dying: Meaning & Interpretation",
@@ -21,8 +22,9 @@ export const DREAM_SEO_TITLES: Record<string, string> = {
   "dead-mother-dream-meaning": "Dreaming of a Dead Mother: Meaning & Comfort",
   "house-on-fire": "House on Fire Dream Meaning (Explained)",
 };
+export const DREAM_SEO_TITLES: Record<string, string> = fromContent("seo_dreams", DREAM_SEO_TITLES_DEFAULT);
 
-export const SYMBOL_SEO_TITLES: Record<string, string> = {
+const SYMBOL_SEO_TITLES_DEFAULT: Record<string, string> = {
   "angel-number-111": "111 Angel Number Meaning: Love, Money & Twin Flame",
   "angel-number-222": "222 Angel Number Meaning: Love, Money & Twin Flame",
   "angel-number-333": "333 Angel Number Meaning: Love, Money & Twin Flame",
@@ -44,3 +46,4 @@ export const SYMBOL_SEO_TITLES: Record<string, string> = {
   "owl-spirit-animal": "Owl Spiritual Meaning & Spirit Animal",
   "ear-ringing-spiritual-meaning": "Right & Left Ear Ringing Spiritual Meaning",
 };
+export const SYMBOL_SEO_TITLES: Record<string, string> = fromContent("seo_symbols", SYMBOL_SEO_TITLES_DEFAULT);

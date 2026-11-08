@@ -1,3 +1,4 @@
+import { fromContent } from "./content";
 export interface AnimalProfile {
   animal: string;
   slug: string;
@@ -12,7 +13,7 @@ export interface AnimalProfile {
   faq: { question: string; answer: string }[];
 }
 
-export const ANIMAL_PROFILES: AnimalProfile[] = [
+const ANIMAL_PROFILES_DEFAULT: AnimalProfile[] = [
   {
     animal: "Rat", slug: "rat",
     tagline: "Quick-witted, resourceful and charming.",
@@ -230,25 +231,29 @@ export const ANIMAL_PROFILES: AnimalProfile[] = [
     ],
   },
 ];
+export const ANIMAL_PROFILES: AnimalProfile[] = fromContent("chinese_animals", ANIMAL_PROFILES_DEFAULT);
 
 export const ANIMAL_BY_NAME: Record<string, AnimalProfile> = Object.fromEntries(ANIMAL_PROFILES.map((a) => [a.animal, a]));
 
-export const TRINES: Record<string, string[]> = {
+const TRINES_DEFAULT: Record<string, string[]> = {
   Rat: ["Dragon", "Monkey"], Dragon: ["Rat", "Monkey"], Monkey: ["Rat", "Dragon"],
   Ox: ["Snake", "Rooster"], Snake: ["Ox", "Rooster"], Rooster: ["Ox", "Snake"],
   Tiger: ["Horse", "Dog"], Horse: ["Tiger", "Dog"], Dog: ["Tiger", "Horse"],
   Rabbit: ["Goat", "Pig"], Goat: ["Rabbit", "Pig"], Pig: ["Rabbit", "Goat"],
 };
+export const TRINES: Record<string, string[]> = fromContent("chinese_trines", TRINES_DEFAULT);
 
-export const CLASHES: Record<string, string> = {
+const CLASHES_DEFAULT: Record<string, string> = {
   Rat: "Horse", Horse: "Rat", Ox: "Goat", Goat: "Ox", Tiger: "Monkey", Monkey: "Tiger",
   Rabbit: "Rooster", Rooster: "Rabbit", Dragon: "Dog", Dog: "Dragon", Snake: "Pig", Pig: "Snake",
 };
+export const CLASHES: Record<string, string> = fromContent("chinese_clashes", CLASHES_DEFAULT);
 
-export const ELEMENT_NOTES: Record<string, string> = {
+const ELEMENT_NOTES_DEFAULT: Record<string, string> = {
   Wood: "Wood years add growth, creativity and flexibility. Wood people tend to be idealistic, cooperative and always learning.",
   Fire: "Fire years add passion, enthusiasm and boldness. Fire people tend to be dynamic, expressive and quick to act.",
   Earth: "Earth years add stability, practicality and loyalty. Earth people tend to be dependable, patient and grounded.",
   Metal: "Metal years add determination, discipline and focus. Metal people tend to be organized, ambitious and self-reliant.",
   Water: "Water years add intuition, adaptability and empathy. Water people tend to be thoughtful, diplomatic and perceptive.",
 };
+export const ELEMENT_NOTES: Record<string, string> = fromContent("chinese_element_notes", ELEMENT_NOTES_DEFAULT);

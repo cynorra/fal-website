@@ -4,6 +4,7 @@ import Link from "next/link";
 import { DailyTarotWidget } from "@/components/interactive/DailyTarotWidget";
 import { ArrowLeft } from "lucide-react";
 import { AdBanner } from "@/components/ui/AdBanner";
+import { TAROT_DECK } from "@/lib/tarot-data";
 
 export const metadata: Metadata = {
   title: "Daily Tarot Card Draw | Free 3D Interactive Card Reading",
@@ -48,7 +49,7 @@ export default function TarotPage() {
       <section className="glass-panel rounded-3xl p-6 sm:p-8 border border-white/10 space-y-5 text-white/80 font-light text-sm leading-relaxed">
         <div className="space-y-2">
           <h2 className="text-xl font-serif font-bold text-white">How this tarot draw works</h2>
-          <p>This tool shuffles a small deck of 10 Major Arcana cards and shows one at random. Each card has an upright meaning and a reversed meaning, and the card changes every time you draw. It is a reduced deck for quick daily reflection, not a full 78-card reading.</p>
+          <p>This tool shuffles a small deck of {TAROT_DECK.length} Major Arcana cards and shows one at random. Each card has an upright meaning and a reversed meaning, and the card changes every time you draw. It is a reduced deck for quick daily reflection, not a full 78-card reading.</p>
         </div>
         <div className="space-y-2">
           <h2 className="text-xl font-serif font-bold text-white">How to use your card</h2>
