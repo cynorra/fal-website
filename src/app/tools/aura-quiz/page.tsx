@@ -24,6 +24,11 @@ export default function AuraQuizPage() {
         </Link>
       </div>
 
+      <header className="space-y-2">
+        <h1 className="text-3xl sm:text-5xl font-serif font-black text-white">Aura Color Quiz</h1>
+        <p className="text-base text-white/70">Seven questions about how you react in everyday situations, scored into a dominant aura color.</p>
+      </header>
+
       <AuraQuizWidget />
 
       {/* SEO Article */}
@@ -40,6 +45,20 @@ export default function AuraQuizPage() {
       </section>
 
       <AdBanner format="in-article" label="AURA CLEANSING SOUND BOWLS" />
+      <section className="glass-panel rounded-3xl p-6 sm:p-8 border border-white/10 space-y-5 text-white/80 font-light text-sm leading-relaxed">
+        <div className="space-y-2">
+          <h2 className="text-xl font-serif font-bold text-white">How the aura quiz is scored</h2>
+          <p>Each answer awards points to one or more aura colors. When you finish, the color with the most points becomes your dominant aura, shown with its strengths, shadow side, companion crystal and associated chakra. The result depends only on your answers, so the same answers always give the same color.</p>
+        </div>
+        <div className="space-y-2">
+          <h2 className="text-xl font-serif font-bold text-white">What aura colors mean</h2>
+          <p>In spiritual traditions, an aura is described as a field of color around a person that reflects mood and temperament. There is no scientific evidence that auras can be measured, and aura photography shows heat and moisture, not energy. The colors here are a vocabulary for describing your personality style.</p>
+        </div>
+        <div className="space-y-2">
+          <h2 className="text-xl font-serif font-bold text-white">Aura quiz questions</h2>
+          <p>Can my aura color change? Since the quiz reflects your current answers, yes. Take it again when your mood or circumstances change. Is this a personality test? It is a light-hearted reflection tool, not a psychological assessment.</p>
+        </div>
+      </section>
     </div>
   );
 }
