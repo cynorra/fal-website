@@ -49,3 +49,6 @@ next-env.d.ts
 
 # generator dry runs
 /.dry-run/
+
+# Keyword Planner exports
+Keyword Stats*.csv
