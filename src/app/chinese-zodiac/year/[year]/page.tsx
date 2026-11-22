@@ -6,6 +6,7 @@ import { ArrowLeft, ArrowRight } from "lucide-react";
 import { ANIMAL_BY_NAME, ELEMENT_NOTES, TRINES, CLASHES } from "@/lib/chinese-zodiac-data";
 import { chineseNewYear, chineseZodiac } from "@/lib/chinese-calendar";
 import { AdBanner } from "@/components/ui/AdBanner";
+import { ANIMAL_OWN_ELEMENT, cycleInfo, pairedYear, relation, relationText, liChun, westernSignOn, lanternFestival } from "@/lib/chinese-year-facts";
 
 interface Props {
   params: { year: string };
@@ -67,6 +68,72 @@ export default function YearPage({ params }: Props) {
     return { name, years: nearest };
   });
 
+  // Extra year-specific facts (all computed or rule-derived)
+  const cyc = cycleInfo(z.zodiacYear);
+  const pairYear = pairedYear(y);
+  const ownEl = ANIMAL_OWN_ELEMENT[z.animal];
+  const rel = relation(z.element, ownEl);
+  const relText = relationText(rel, y, z.element, z.animal, ownEl);
+  const lc = liChun(y);
+  const lcDate = `${MONTHS[lc.month - 1]} ${lc.day}`;
+  const nearMidnight = lc.hour < 2 || lc.hour >= 22;
+  const lcLabel = !nearMidnight ? lcDate : lc.hour < 2 ? `${MONTHS[lc.month - 1]} ${lc.day - 1} or ${lc.day}` : `${MONTHS[lc.month - 1]} ${lc.day} or ${lc.day + 1}`;
+  const cnyIsAfterLiChun = start.month > lc.month || (start.month === lc.month && start.day > lc.day);
+  const gapDays = Math.abs(Math.round((Date.UTC(y, start.month - 1, start.day) - Date.UTC(y, lc.month - 1, lc.day)) / 86400000));
+  const lastDay = new Date(Date.UTC(y + 1, nextStart.month - 1, nextStart.day) - 86400000);
+  const signStart = westernSignOn(y, start.month, start.day);
+  const signEnd = westernSignOn(lastDay.getUTCFullYear(), lastDay.getUTCMonth() + 1, lastDay.getUTCDate());
+  const lantern = lanternFestival(y);
+  const V = y % 4; // deterministic variant so pages do not share one fixed outline
+  const quickHeading = ["Quick answer", "Which sign are you?", `Your ${y} sign at a glance`, "The short version"][V];
+  const earlyHeading = [`Born early in ${y}?`, `January and February ${y} birthdays`, `Born before Chinese New Year ${y}?`, `The ${y} cut-off date`][V];
+  const factsHeading = [`${y} zodiac year facts`, `${y} by the numbers`, `The ${y} calendar in detail`, `What to know about the ${y} year`][V];
+  const cycleHeading = [`${y} in the 60-year cycle: ${cyc.name}`, `The ${cyc.name} year`, `Where ${y} sits in the sexagenary cycle`, `${cyc.name}: the stem and branch of ${y}`][V];
+  const elementHeading = [`${z.element} year, ${ownEl} animal`, "Two elements in one sign", `The ${z.element} ${z.animal} and its own ${ownEl}`, "Year element and animal element"][V];
+  const boundaryHeading = [`Two ways to draw the line in ${y}`, "Chinese New Year or Li Chun?", `Which date starts the ${y} year?`, `Zodiac calendar and BaZi calendar in ${y}`][V];
+  const compatHeading = [`${z.animal} compatibility`, `Who suits the ${z.animal}?`, `${z.animal} matches and clashes`, `${z.animal} in love and friendship`][V];
+
+  const secCycle = (
+  <section className="space-y-3">
+    <h2 className="text-2xl font-serif font-bold text-white">{cycleHeading}</h2>
+    <p>
+      Traditional Chinese calendars pair ten heavenly stems with twelve earthly branches, which gives a cycle of 60 years.
+      {" "}{y} is the <strong className="text-white">{cyc.name}</strong> year ({cyc.stem} is a {cyc.stemElement} stem, {cyc.branch} is the {z.animal} branch),
+      number {cyc.position} of 60. Each element covers two consecutive years, one Yang and one Yin, so the {z.element} {z.polarity === "Yang" ? "pair continues into" : "pair began in"}{" "}
+      <Link href={`/chinese-zodiac/year/${pairYear}`} className="text-amber-300 underline">{pairYear}</Link>
+      {pairYear >= FIRST && pairYear <= LAST ? ` (${chineseZodiac(pairYear, 7, 1).polarity} ${chineseZodiac(pairYear, 7, 1).element} ${chineseZodiac(pairYear, 7, 1).animal})` : ""}.
+    </p>
+  </section>
+  );
+  const secElement = (
+  <section className="space-y-3">
+    <h2 className="text-2xl font-serif font-bold text-white">{elementHeading}</h2>
+    <p>
+      Besides the element of the year, every animal has an element of its own. The {z.animal}&apos;s is {ownEl}, so the {z.element} {z.animal} brings
+      together two layers: the element of the year and the element of the animal.
+    </p>
+    <p>{relText}</p>
+    <p className="text-xs text-white/50">These are readings from traditional five-phase theory, shown as part of the cultural system, not as predictions.</p>
+  </section>
+  );
+  const secBoundary = (
+  <section className="space-y-3">
+    <h2 className="text-2xl font-serif font-bold text-white">{boundaryHeading}</h2>
+    <p>
+      Most people use Chinese New Year ({fmt(start, y)}) as the start of the zodiac year. BaZi, or Four Pillars astrology, instead starts the year at
+      Li Chun, the beginning of spring, which fell on about <strong className="text-white">{lcLabel}</strong> in {y}.
+    </p>
+    <p>
+      {gapDays === 0
+        ? `In ${y} the two dates coincided, so both systems agree for every birthday.`
+        : cnyIsAfterLiChun
+          ? `In ${y} Li Chun came ${gapDays} day${gapDays === 1 ? "" : "s"} before Chinese New Year. Someone born in between would be a ${prev.element} ${prev.animal} by the zodiac calendar but already in the ${z.element} ${z.animal} year by the BaZi rule.`
+          : `In ${y} Chinese New Year came ${gapDays} day${gapDays === 1 ? "" : "s"} before Li Chun. Someone born in between would be a ${z.element} ${z.animal} by the zodiac calendar but still in the previous year, ${prev.element} ${prev.animal}, by the BaZi rule.`}
+      {" "}If your birthday is within a few days of either date, check both before you decide which reading to follow.
+    </p>
+  </section>
+  );
+
   return (
     <article className="max-w-3xl mx-auto py-8 space-y-10 text-sm sm:text-base text-white/80 font-light leading-relaxed">
       <Link href="/chinese-zodiac" className="inline-flex items-center space-x-1.5 text-xs text-purple-300 hover:text-white">
@@ -85,7 +152,7 @@ export default function YearPage({ params }: Props) {
       </header>
 
       <section className="glass-panel rounded-2xl p-5 border border-white/10 space-y-2">
-        <h2 className="font-serif font-bold text-white">Quick answer</h2>
+        <h2 className="font-serif font-bold text-white">{quickHeading}</h2>
         <p>
           The {y} zodiac year ran from <strong className="text-white">{fmt(start, y)}</strong> to{" "}
           <strong className="text-white">{endStr}</strong>. If you were born on or after {fmt(start, y)}, your sign is the{" "}
@@ -117,7 +184,7 @@ export default function YearPage({ params }: Props) {
       </section>
 
       <section className="space-y-3">
-        <h2 className="text-2xl font-serif font-bold text-white">Born early in {y}?</h2>
+        <h2 className="text-2xl font-serif font-bold text-white">{earlyHeading}</h2>
         <p>
           The Chinese zodiac follows the lunisolar calendar, so a January or February birth often belongs to the previous
           animal. In {y}, Chinese New Year fell on {fmt(start, y)}. Anyone born before that date is a {prev.element}{" "}
@@ -129,8 +196,12 @@ export default function YearPage({ params }: Props) {
         </p>
       </section>
 
+      {[[secCycle, secElement, secBoundary], [secBoundary, secCycle, secElement], [secElement, secBoundary, secCycle], [secCycle, secBoundary, secElement]][V].map((s, i) => (
+        <React.Fragment key={i}>{s}</React.Fragment>
+      ))}
+
       <section className="space-y-3">
-        <h2 className="text-2xl font-serif font-bold text-white">{y} zodiac year facts</h2>
+        <h2 className="text-2xl font-serif font-bold text-white">{factsHeading}</h2>
         <ul className="list-disc pl-5 space-y-1">
           <li>
             Chinese New Year {y} fell on a <strong className="text-white">{weekday}</strong>, {fmt(start, y)}.
@@ -141,6 +212,12 @@ export default function YearPage({ params }: Props) {
           </li>
           <li>
             Anyone born in the first <strong className="text-white">{earlyDays} days</strong> of {y} (January 1 to {fmt(start, y)}) belongs to the previous sign.
+          </li>
+          <li>
+            The Lantern Festival, the 15th day of the first lunar month, fell on <strong className="text-white">{MONTHS[lantern.month - 1]} {lantern.day}</strong>, which closes the New Year celebrations.
+          </li>
+          <li>
+            Western Sun signs: the {y} zodiac year opened with the Sun in {signStart} and closed with the Sun in {signEnd}, so people born in the same Chinese year can carry any of the twelve Sun signs.
           </li>
           <li>
             {ageNow >= 0
@@ -184,7 +261,7 @@ export default function YearPage({ params }: Props) {
       </section>
 
       <section className="space-y-3">
-        <h2 className="text-2xl font-serif font-bold text-white">{z.animal} compatibility</h2>
+        <h2 className="text-2xl font-serif font-bold text-white">{compatHeading}</h2>
         <p>
           The {z.animal} is traditionally most harmonious with{" "}
           {TRINES[z.animal].map((f, i) => (
