@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import "./globals.css";
 import { Navbar } from "@/components/ui/Navbar";
 import { Footer } from "@/components/ui/Footer";
+import { CookieConsent } from "@/components/ui/CookieConsent";
 import { StarsBackground } from "@/components/ui/StarsBackground";
 import { SITE_URL, SITE_NAME, ADSENSE_CLIENT_ID } from "@/lib/site";
 
@@ -70,18 +71,10 @@ export default function RootLayout({
     <html lang="en" className="dark">
       <head>
         {/* Use a ternary: `"" && ...` would render an empty text node inside <head> and break hydration */}
-        {ADSENSE_CLIENT_ID ? (
-          <>
-            <meta name="google-adsense-account" content={ADSENSE_CLIENT_ID} />
-            <script
-              async
-              src={`https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=${ADSENSE_CLIENT_ID}`}
-              crossOrigin="anonymous"
-            />
-          </>
-        ) : null}
+        {ADSENSE_CLIENT_ID ? <meta name="google-adsense-account" content={ADSENSE_CLIENT_ID} /> : null}
       </head>
       <body className="min-h-screen flex flex-col relative selection:bg-purple-500/30 selection:text-amber-300">
+        <CookieConsent adsensePublisherId={ADSENSE_CLIENT_ID || undefined} />
         <StarsBackground />
         <Navbar />
         <main className="flex-1 z-10 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto w-full pt-6">

@@ -1,3 +1,4 @@
+import { CookiePreferencesButton } from "@/components/ui/CookieConsent";
 import React from "react";
 import Link from "next/link";
 import { Sparkles, Heart, Shield, BookOpen, Compass, Mail, Moon } from "lucide-react";
@@ -143,6 +144,9 @@ export function Footer() {
                 <Link href="/privacy-policy" className="hover:text-amber-300 transition-colors">
                   Privacy Policy (GDPR / CCPA)
                 </Link>
+              </li>
+              <li>
+                <CookiePreferencesButton />
               </li>
               <li>
                 <Link href="/terms" className="hover:text-amber-300 transition-colors">
