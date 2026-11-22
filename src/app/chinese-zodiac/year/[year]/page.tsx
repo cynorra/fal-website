@@ -12,6 +12,7 @@ interface Props {
   params: { year: string };
 }
 
+const an = (w: string) => (/^[AEIOU]/i.test(w) ? "an" : "a");
 const FIRST = 1948;
 const LAST = 2031;
 const MONTHS = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
@@ -152,7 +153,7 @@ export default function YearPage({ params }: Props) {
     <h2 className="text-2xl font-serif font-bold text-white">{cycleHeading}</h2>
     <p>
       Traditional Chinese calendars pair ten heavenly stems with twelve earthly branches, which gives a cycle of 60 years.
-      {" "}{y} is the <strong className="text-white">{cyc.name}</strong> year ({cyc.stem} is a {cyc.stemElement} stem, {cyc.branch} is the {z.animal} branch),
+      {" "}{y} is the <strong className="text-white">{cyc.name}</strong> year ({cyc.stem} is {an(cyc.stemElement)} {cyc.stemElement} stem, {cyc.branch} is the {z.animal} branch),
       number {cyc.position} of 60. Each element covers two consecutive years, one Yang and one Yin, so the {z.element} {z.polarity === "Yang" ? "pair continues into" : "pair began in"}{" "}
       <Link href={`/chinese-zodiac/year/${pairYear}`} className="text-amber-300 underline">{pairYear}</Link>
       {pairYear >= FIRST && pairYear <= LAST ? ` (${chineseZodiac(pairYear, 7, 1).polarity} ${chineseZodiac(pairYear, 7, 1).element} ${chineseZodiac(pairYear, 7, 1).animal})` : ""}.
@@ -181,8 +182,8 @@ export default function YearPage({ params }: Props) {
       {gapDays === 0
         ? `In ${y} the two dates coincided, so both systems agree for every birthday.`
         : cnyIsAfterLiChun
-          ? `In ${y} Li Chun came ${gapDays} day${gapDays === 1 ? "" : "s"} before Chinese New Year. Someone born in between would be a ${prev.element} ${prev.animal} by the zodiac calendar but already in the ${z.element} ${z.animal} year by the BaZi rule.`
-          : `In ${y} Chinese New Year came ${gapDays} day${gapDays === 1 ? "" : "s"} before Li Chun. Someone born in between would be a ${z.element} ${z.animal} by the zodiac calendar but still in the previous year, ${prev.element} ${prev.animal}, by the BaZi rule.`}
+          ? `In ${y} Li Chun came ${gapDays} day${gapDays === 1 ? "" : "s"} before Chinese New Year. Someone born in between would be ${an(prev.element)} ${prev.element} ${prev.animal} by the zodiac calendar but already in the ${z.element} ${z.animal} year by the BaZi rule.`
+          : `In ${y} Chinese New Year came ${gapDays} day${gapDays === 1 ? "" : "s"} before Li Chun. Someone born in between would be ${an(z.element)} ${z.element} ${z.animal} by the zodiac calendar but still in the previous year, ${prev.element} ${prev.animal}, by the BaZi rule.`}
       {" "}If your birthday is within a few days of either date, check both before you decide which reading to follow.
     </p>
   </section>
@@ -248,7 +249,7 @@ export default function YearPage({ params }: Props) {
         <h2 className="text-2xl font-serif font-bold text-white">{earlyHeading}</h2>
         <p>
           The Chinese zodiac follows the lunisolar calendar, so a January or February birth often belongs to the previous
-          animal. In {y}, Chinese New Year fell on {fmt(start, y)}. Anyone born before that date is a {prev.element}{" "}
+          animal. In {y}, Chinese New Year fell on {fmt(start, y)}. Anyone born before that date is {an(prev.element)} {prev.element}{" "}
           {prev.animal} instead.{" "}
           <Link href={`/chinese-zodiac/${prevA.slug}`} className="text-amber-300 underline">
             See the {prev.animal} guide
