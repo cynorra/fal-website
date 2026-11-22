@@ -6,7 +6,7 @@ import { ArrowLeft, ArrowRight } from "lucide-react";
 import { ANIMAL_BY_NAME, ELEMENT_NOTES, TRINES, CLASHES } from "@/lib/chinese-zodiac-data";
 import { chineseNewYear, chineseZodiac } from "@/lib/chinese-calendar";
 import { AdBanner } from "@/components/ui/AdBanner";
-import { ANIMAL_OWN_ELEMENT, cycleInfo, pairedYear, relation, relationText, liChun, westernSignOn, lanternFestival } from "@/lib/chinese-year-facts";
+import { ANIMAL_CHARS, ELEMENT_CHARS, ANIMAL_OWN_ELEMENT, cycleInfo, pairedYear, relation, relationText, liChun, westernSignOn, lanternFestival } from "@/lib/chinese-year-facts";
 
 interface Props {
   params: { year: string };
@@ -33,8 +33,8 @@ export function generateMetadata({ params }: Props): Metadata {
   if (!(y >= FIRST && y <= LAST)) return { title: "Chinese Zodiac Not Found | Horoscopes and Charts", robots: { index: false } };
   const { z } = info(y);
   return {
-    title: `${y} Chinese Zodiac: ${z.element} ${z.animal} | Horoscopes and Charts`,
-    description: `${y} Chinese zodiac sign: ${z.polarity} ${z.element} ${z.animal}. Chinese New Year date, exact zodiac year range, personality, element meaning and compatibility.`,
+    title: { absolute: `${y} Chinese Zodiac: Year of the ${z.animal} (${z.element} ${z.animal})` },
+    description: `${y} Chinese zodiac: ${z.polarity} ${z.element} ${z.animal}, year of the ${z.animal}. Chinese New Year date, exact dates, element, personality and compatibility.`,
   };
 }
 
@@ -84,6 +84,49 @@ export default function YearPage({ params }: Props) {
   const signStart = westernSignOn(y, start.month, start.day);
   const signEnd = westernSignOn(lastDay.getUTCFullYear(), lastDay.getUTCMonth() + 1, lastDay.getUTCDate());
   const lantern = lanternFestival(y);
+  const thisYear = new Date().getUTCFullYear();
+  const nextAnimalYear = y + 12;
+  const nextAnimalSign = chineseZodiac(nextAnimalYear, 7, 1);
+  const prevSign = chineseZodiac(y - 1, 7, 1);
+  const nextSign = chineseZodiac(y + 1, 7, 1);
+  const nextCny = fmt(nextStart, y + 1);
+  const firstSentence = (txt: string) => txt.split(". ")[0].replace(/\.$/, "");
+  const faqs = [
+    {
+      q: `What is the Chinese zodiac sign for ${y}?`,
+      a: `The Chinese zodiac sign for ${y} is the ${z.element} ${z.animal} (${z.polarity} ${z.element}), the Year of the ${z.animal}. The zodiac year began on ${fmt(start, y)} and ended on ${endStr}.`,
+    },
+    {
+      q: `What animal is Chinese New Year ${y}?`,
+      a: `Chinese New Year ${y} fell on ${weekday}, ${fmt(start, y)}, and began the Year of the ${z.animal}. Anyone born before that date belongs to the previous animal, the ${prev.animal}, so a January or February birthday needs a check against it.`,
+    },
+    {
+      q: `What Chinese year is ${y}?`,
+      a: `In the Chinese lunisolar calendar ${y} is the Year of the ${z.animal}, known by its stem-branch name ${cyc.name} (${cyc.chars}). The lunar new year ${y} began on ${fmt(start, y)} and the next lunar year started on ${nextCny}.`,
+    },
+    {
+      q: `What is the ${y} Chinese zodiac element?`,
+      a: `The element is ${z.element}. In the sexagenary cycle ${y} is the ${cyc.name} year, and its ${cyc.stem} stem carries ${cyc.stemElement}. The ${z.element} element also covers ${pairYear}, which is a ${chineseZodiac(pairYear, 7, 1).polarity} ${chineseZodiac(pairYear, 7, 1).animal} year.`,
+    },
+    {
+      q: `What is the Chinese horoscope for people born in ${y}?`,
+      a: `The ${z.animal} is traditionally described as: ${a.tagline.replace(/\.$/, "").toLowerCase()}. Commonly listed strengths include ${a.strengths.slice(0, 3).join("; ").toLowerCase()}, while commonly listed weaknesses include ${a.weaknesses.slice(0, 2).join("; ").toLowerCase()}. For the ${z.element} ${z.animal}, tradition adds that ${firstSentence(ELEMENT_NOTES[z.element]).charAt(0).toLowerCase()}${firstSentence(ELEMENT_NOTES[z.element]).slice(1)}.`,
+    },
+    {
+      q: `How old is someone born in ${y} in ${thisYear}?`,
+      a: ageNow >= 0
+        ? `A person born in ${y} turns ${ageNow} in ${thisYear} by Western counting, so they are ${ageNow} or ${ageNow - 1} depending on the birthday. In traditional Chinese age counting, which starts at 1 at birth and adds a year at each Chinese New Year, the same person is about ${ageNow + 1}.`
+        : `${y} has not started yet.`,
+    },
+    {
+      q: `Which Chinese zodiac years come before and after ${y}?`,
+      a: `The year before is ${y - 1}, a ${prevSign.polarity} ${prevSign.element} ${prevSign.animal} year, and the year after is ${y + 1}, a ${nextSign.polarity} ${nextSign.element} ${nextSign.animal} year. The twelve animals repeat in a fixed order, so the next ${z.animal} year after ${y} is ${nextAnimalYear}, ${/^[AEIOU]/.test(nextAnimalSign.element) ? "an" : "a"} ${nextAnimalSign.element} ${z.animal} year.`,
+    },
+    {
+      q: `Who is the ${y} ${z.animal} compatible with?`,
+      a: `Traditionally the ${z.animal} pairs best with the ${TRINES[z.animal].join(" and the ")}, which share its trine, and clashes with the ${CLASHES[z.animal]}. Chinese compatibility is a cultural tradition, not a guarantee about any relationship.`,
+    },
+  ];
   const V = y % 4; // deterministic variant so pages do not share one fixed outline
   const quickHeading = ["Quick answer", "Which sign are you?", `Your ${y} sign at a glance`, "The short version"][V];
   const earlyHeading = [`Born early in ${y}?`, `January and February ${y} birthdays`, `Born before Chinese New Year ${y}?`, `The ${y} cut-off date`][V];
@@ -93,6 +136,17 @@ export default function YearPage({ params }: Props) {
   const boundaryHeading = [`Two ways to draw the line in ${y}`, "Chinese New Year or Li Chun?", `Which date starts the ${y} year?`, `Zodiac calendar and BaZi calendar in ${y}`][V];
   const compatHeading = [`${z.animal} compatibility`, `Who suits the ${z.animal}?`, `${z.animal} matches and clashes`, `${z.animal} in love and friendship`][V];
 
+  const symbolHeading = [`Chinese symbol for ${y}`, `The ${y} animal in Chinese characters`, `How ${y} is written in Chinese`, `${z.animal} in Chinese: the ${y} symbol`][V];
+  const secSymbol = (
+    <section className="space-y-3">
+      <h2 className="text-2xl font-serif font-bold text-white">{symbolHeading}</h2>
+      <p>
+        The Chinese symbol for the {z.animal} is <strong className="text-white">{ANIMAL_CHARS[z.animal].char}</strong> ({ANIMAL_CHARS[z.animal].pinyin}).
+        In the traditional stem-branch notation {y} is written <strong className="text-white">{cyc.chars}</strong> ({cyc.stem}-{cyc.branch}), and the {z.element} element
+        is written <strong className="text-white">{ELEMENT_CHARS[z.element]}</strong>. The Chinese sign for {y} is therefore the {z.element} {z.animal}, {ELEMENT_CHARS[z.element]}{ANIMAL_CHARS[z.animal].char}.
+      </p>
+    </section>
+  );
   const secCycle = (
   <section className="space-y-3">
     <h2 className="text-2xl font-serif font-bold text-white">{cycleHeading}</h2>
@@ -146,8 +200,8 @@ export default function YearPage({ params }: Props) {
           {y} Chinese Zodiac: {z.element} {z.animal}
         </h1>
         <p className="text-base sm:text-lg text-white/70">
-          People born in {y} are {z.polarity} {z.element} {z.animal}s, with one important exception: the first weeks of
-          the year.
+          {y} is the Year of the {z.animal} in the Chinese zodiac. People born in {y} are {z.polarity} {z.element} {z.animal}s,
+          with one important exception: the first weeks of the year.
         </p>
       </header>
 
@@ -161,6 +215,13 @@ export default function YearPage({ params }: Props) {
         </p>
       </section>
 
+      <p>
+        Chinese astrology, sometimes called the Chinese horoscope, assigns every year to one of 12 zodiac animals and one of five elements. This page
+        shows the full {y} Chinese zodiac sign for {z.element} {z.animal}, including the exact start and end dates, the sexagenary cycle name and how
+        the {y} year relates to neighbouring Chinese zodiac years. To check any other birth year, use the{" "}
+        <Link href="/chinese-zodiac" className="text-amber-300 underline">Chinese zodiac calculator</Link>.
+      </p>
+
       <AdBanner format="in-article" />
 
       <section className="space-y-3">
@@ -168,7 +229,7 @@ export default function YearPage({ params }: Props) {
           {z.element} {z.animal} personality
         </h2>
         <p>{a.tagline}</p>
-        <p>{a.personality[0]}</p>
+        <p>{a.personality[Math.floor((z.zodiacYear - 4) / 12) % a.personality.length]}</p>
         <p>{ELEMENT_NOTES[z.element]}</p>
         <p>
           <strong className="text-white">Strengths:</strong> {a.strengths.join(", ")}.{" "}
@@ -196,7 +257,7 @@ export default function YearPage({ params }: Props) {
         </p>
       </section>
 
-      {[[secCycle, secElement, secBoundary], [secBoundary, secCycle, secElement], [secElement, secBoundary, secCycle], [secCycle, secBoundary, secElement]][V].map((s, i) => (
+      {[[secCycle, secSymbol, secElement, secBoundary], [secSymbol, secBoundary, secCycle, secElement], [secElement, secBoundary, secSymbol, secCycle], [secBoundary, secCycle, secElement, secSymbol]][V].map((s, i) => (
         <React.Fragment key={i}>{s}</React.Fragment>
       ))}
 
@@ -294,6 +355,16 @@ export default function YearPage({ params }: Props) {
           ))}
           .
         </p>
+      </section>
+
+      <section className="space-y-4">
+        <h2 className="text-2xl font-serif font-bold text-white">Questions about the {y} Chinese zodiac</h2>
+        {faqs.map((f) => (
+          <div key={f.q} className="space-y-1">
+            <h3 className="font-serif font-bold text-white text-lg">{f.q}</h3>
+            <p>{f.a}</p>
+          </div>
+        ))}
       </section>
 
       <nav className="flex items-center justify-between border-t border-white/10 pt-6 text-sm">

@@ -17,6 +17,17 @@ export const STEMS = [
   { name: "Gui", element: "Water" },
 ] as const;
 
+export const STEM_CHARS = ["甲", "乙", "丙", "丁", "戊", "己", "庚", "辛", "壬", "癸"] as const;
+export const BRANCH_CHARS = ["子", "丑", "寅", "卯", "辰", "巳", "午", "未", "申", "酉", "戌", "亥"] as const;
+export const ELEMENT_CHARS: Record<string, string> = { Wood: "木", Fire: "火", Earth: "土", Metal: "金", Water: "水" };
+/** The animal's character (simplified) and its pinyin, used for "Chinese symbol" lookups. */
+export const ANIMAL_CHARS: Record<string, { char: string; pinyin: string }> = {
+  Rat: { char: "鼠", pinyin: "shǔ" }, Ox: { char: "牛", pinyin: "niú" }, Tiger: { char: "虎", pinyin: "hǔ" },
+  Rabbit: { char: "兔", pinyin: "tù" }, Dragon: { char: "龙", pinyin: "lóng" }, Snake: { char: "蛇", pinyin: "shé" },
+  Horse: { char: "马", pinyin: "mǎ" }, Goat: { char: "羊", pinyin: "yáng" }, Monkey: { char: "猴", pinyin: "hóu" },
+  Rooster: { char: "鸡", pinyin: "jī" }, Dog: { char: "狗", pinyin: "gǒu" }, Pig: { char: "猪", pinyin: "zhū" },
+};
+
 export const BRANCHES = ["Zi", "Chou", "Yin", "Mao", "Chen", "Si", "Wu", "Wei", "Shen", "You", "Xu", "Hai"] as const;
 
 /** The element each animal carries as its own, fixed by its earthly branch (distinct from the year's element). */
@@ -33,7 +44,7 @@ export function cycleInfo(zodiacYear: number) {
   const i = (((zodiacYear - 4) % 60) + 60) % 60;
   const stem = STEMS[i % 10];
   const branch = BRANCHES[i % 12];
-  return { position: i + 1, stem: stem.name, stemElement: stem.element, branch, name: `${stem.name}-${branch}` };
+  return { position: i + 1, stem: stem.name, stemElement: stem.element, branch, name: `${stem.name}-${branch}`, chars: `${STEM_CHARS[i % 10]}${BRANCH_CHARS[i % 12]}` };
 }
 
 /** The other year of the two-year element pair (each element covers two consecutive years: Yang then Yin). */
